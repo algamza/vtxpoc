@@ -1,0 +1,2 @@
+rootProject.name='V2xPoc'
+include ':app'

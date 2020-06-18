@@ -1,0 +1,99 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.humaxdigital.automotive.v2xpoc"
+        minSdkVersion 26
+        targetSdkVersion 28
+
+        def date = new Date()
+        def time1 = date.format("yyyyMMdd")
+        def time2 = date.format("HHmm")
+        def codeFromDate = Integer.valueOf(time1)
+        def nameFromDate = Integer.valueOf(time2)
+
+        versionCode codeFromDate
+        versionName "0.0-${codeFromDate}-${nameFromDate}"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        keyRelease {
+            storeFile file("../keystore/carwashing.jks")
+            storePassword "humax@!"
+            keyAlias "gasstation"
+            keyPassword "humax@!"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.keyRelease
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def time = new Date().format("hhmmss")
+                    outputFileName = "carwashing-${variant.flavorName}-${variant.buildType.name}-${defaultConfig.versionName}.apk"
+                }
+            }
+        }
+        debug {
+            signingConfig signingConfigs.keyRelease
+        }
+    }
+
+    flavorDimensions "model"
+    productFlavors {
+        hyundai {
+            dimension "model"
+        }
+        kia {
+            dimension "model"
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+
+    // recycler view
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // koin
+    implementation "org.koin:koin-android-viewmodel:1.0.1"
+
+    // coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
+
+    // koin
+    implementation "org.koin:koin-android-viewmodel:1.0.1"
+
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    compileOnly files('carlibs/framework.jar')
+    compileOnly files('carlibs/android.car.jar')
+    compileOnly files('carlibs/android.extension.car.jar')
+}
