@@ -94,7 +94,9 @@ class TestViewModel(private val getCarUseCase: GetCarUseCase) : ViewModel() {
 
     fun fetchCar() {
         GlobalScope.launch {
+
             getCarUseCase.getGearState().collect { value ->
+                Log.d("TEST", "viewmodel="+value)
                 when(value) {
                 GEAR.D -> _gearState.postValue(3)
                 GEAR.N -> _gearState.postValue(2)

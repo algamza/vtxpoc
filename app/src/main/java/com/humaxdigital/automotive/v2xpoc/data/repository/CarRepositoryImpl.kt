@@ -1,7 +1,5 @@
 package com.humaxdigital.automotive.v2xpoc.data.repository
 
-import android.extension.car.CarSensorManagerEx
-import android.util.Log
 import com.humaxdigital.automotive.v2xpoc.data.car.CarApi
 import com.humaxdigital.automotive.v2xpoc.domain.entities.*
 import com.humaxdigital.automotive.v2xpoc.domain.repositories.CarRepository
