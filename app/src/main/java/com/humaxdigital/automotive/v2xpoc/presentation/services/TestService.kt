@@ -22,7 +22,18 @@ class TestService : Service() {
         super.onCreate()
 
         GlobalScope.launch {
-            getCarUseCase.getGearState().collect { value -> Log.d("TEST", "service="+value)}
+            getCarUseCase.getWarning().collect {value ->
+                TODO()
+            }
+            getCarUseCase.getInform().collect {value ->
+                TODO()
+            }
+            getCarUseCase.getSPaT().collect {value ->
+                TODO()
+            }
+            getCarUseCase.getVehicle().collect {value ->
+                TODO()
+            }
         }
     }
 }

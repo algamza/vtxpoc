@@ -94,15 +94,18 @@ class TestViewModel(private val getCarUseCase: GetCarUseCase) : ViewModel() {
 
     fun fetchCar() {
         GlobalScope.launch {
-
-            getCarUseCase.getGearState().collect { value ->
-                Log.d("TEST", "viewmodel="+value)
-                when(value) {
-                GEAR.D -> _gearState.postValue(3)
-                GEAR.N -> _gearState.postValue(2)
-                GEAR.P -> _gearState.postValue(1)
-                GEAR.R -> _gearState.postValue(0)
-            } }
+            getCarUseCase.getWarning().collect {value ->
+                TODO()
+            }
+            getCarUseCase.getInform().collect {value ->
+                TODO()
+            }
+            getCarUseCase.getSPaT().collect {value ->
+                TODO()
+            }
+            getCarUseCase.getVehicle().collect {value ->
+                TODO()
+            }
         }
     }
 }
