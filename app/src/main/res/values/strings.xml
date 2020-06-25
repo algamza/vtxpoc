@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">V2xPoc</string>
+    <string-array name="v2x_type">
+        <item>No Warning</item>
+        <item>Intersection Collision Warning</item>
+        <item>Left Turn Assist</item>
+        <item>Emergency Brake Warning</item>
+        <item>Abnormal Vehicle Warning</item>
+        <item>Hazard Location Warning</item>
+        <item>Red Light Violation Warning</item>
+        <item>In-Vehicle Signage</item>
+        <item>Emergency Vehicle Warning</item>
+    </string-array>
 </resources>

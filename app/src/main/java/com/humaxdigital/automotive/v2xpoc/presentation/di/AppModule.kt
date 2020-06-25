@@ -5,6 +5,7 @@ import com.humaxdigital.automotive.v2xpoc.data.car.CarApi
 import com.humaxdigital.automotive.v2xpoc.data.repository.CarRepositoryImpl
 import com.humaxdigital.automotive.v2xpoc.domain.repositories.CarRepository
 import com.humaxdigital.automotive.v2xpoc.domain.usecases.GetCarUseCase
+import com.humaxdigital.automotive.v2xpoc.presentation.v2x.TestMainViewModel
 import com.humaxdigital.automotive.v2xpoc.presentation.v2x.TestViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.ext.koin.viewModel
@@ -23,6 +24,7 @@ val mUseCaseModules = module {
 
 val mViewModels = module {
     viewModel { TestViewModel(getCarUseCase = get(GET_CAR_USECASE)) }
+    viewModel { TestMainViewModel(getCarUseCase = get(GET_CAR_USECASE)) }
 }
 
 private const val CAR = "car"

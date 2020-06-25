@@ -12,7 +12,7 @@ enum class TURNLIGHT {NONE, LEFT, RIGHT, OFF, HAZARD}
 enum class LANE {NONE, LANE1, LANE2, LANE3}
 enum class ONOFF { ON, OFF }
 
-data class Direction(
+data class DIRECTION(
     var left : ONOFF,
     var right: ONOFF,
     var forward: ONOFF,
@@ -21,7 +21,7 @@ data class Direction(
 
 data class V2XWarning(
     var type : TYPE,
-    var direction: Direction,
+    var direction: DIRECTION,
     var severity: SEVERITY,
     var range: Int,
     var icon_id: Int,
@@ -32,7 +32,7 @@ data class V2XWarning(
 
 data class V2XInform(
     var type : TYPE,
-    var direction: Direction,
+    var direction: DIRECTION,
     var severity: SEVERITY,
     var range: Int,
     var icon_id: Int,

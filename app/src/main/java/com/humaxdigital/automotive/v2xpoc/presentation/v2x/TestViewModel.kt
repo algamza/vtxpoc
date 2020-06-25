@@ -4,108 +4,164 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.humaxdigital.automotive.v2xpoc.domain.entities.GEAR
 import com.humaxdigital.automotive.v2xpoc.domain.usecases.GetCarUseCase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class TestViewModel(private val getCarUseCase: GetCarUseCase) : ViewModel() {
-    private val _status = MutableLiveData<Int>()
-    private val _vehicleSpeed = MutableLiveData<Int>()
-    private val _gearState = MutableLiveData<Int>()
-    private val _turnLightState = MutableLiveData<Int>()
-    private val _speedLimit = MutableLiveData<Int>()
-    private val _warningType = MutableLiveData<Int>()
-    private val _warningDirection = MutableLiveData<Int>()
-    private val _warningSeverity = MutableLiveData<Int>()
-    private val _warningRange = MutableLiveData<Int>()
-    private val _warningPushed = MutableLiveData<Int>()
-    private val _warningIconId = MutableLiveData<Int>()
-    private val _warningAudioId = MutableLiveData<Int>()
-    private val _warningTextId = MutableLiveData<Int>()
-    private val _informType = MutableLiveData<Int>()
-    private val _informDirection = MutableLiveData<Int>()
-    private val _informSeverity = MutableLiveData<Int>()
-    private val _informRange = MutableLiveData<Int>()
-    private val _informPushed = MutableLiveData<Int>()
-    private val _informIconId = MutableLiveData<Int>()
-    private val _informAudioId = MutableLiveData<Int>()
-    private val _informTextId = MutableLiveData<Int>()
-    private val _configurationHMI = MutableLiveData<Int>()
-    private val _hazardState = MutableLiveData<Int>()
-    private val _breakState = MutableLiveData<Int>()
-    private val _bluetoothState = MutableLiveData<Int>()
+    private val _warningType = MutableLiveData<String>()
+    private val _warningDirection = MutableLiveData<String>()
+    private val _warningSeverity = MutableLiveData<String>()
+    private val _warningRange = MutableLiveData<String>()
+    private val _warningPushed = MutableLiveData<String>()
+    private val _warningIconId = MutableLiveData<String>()
+    private val _warningAudioId = MutableLiveData<String>()
+    private val _warningTextId = MutableLiveData<String>()
 
-    val status : LiveData<Int>
-        get() = _status
-    val vehicleSpeed : LiveData<Int>
-        get() = _vehicleSpeed
-    val gearState : LiveData<Int>
-        get() = _gearState
-    val turnLightState : LiveData<Int>
-        get() = _turnLightState
-    val speedLimit : LiveData<Int>
-        get() = _speedLimit
-    val warningType : LiveData<Int>
+    private val _informType = MutableLiveData<String>()
+    private val _informDirection = MutableLiveData<String>()
+    private val _informSeverity = MutableLiveData<String>()
+    private val _informRange = MutableLiveData<String>()
+    private val _informPushed = MutableLiveData<String>()
+    private val _informIconId = MutableLiveData<String>()
+    private val _informAudioId = MutableLiveData<String>()
+    private val _informTextId = MutableLiveData<String>()
+
+    private val _slPhase = MutableLiveData<String>()
+    private val _slEnd = MutableLiveData<String>()
+    private val _ltPhase = MutableLiveData<String>()
+    private val _ltEnd = MutableLiveData<String>()
+    private val _rtPhase = MutableLiveData<String>()
+    private val _rtEnd = MutableLiveData<String>()
+
+    private val _v2xstatus = MutableLiveData<String>()
+    private val _speed = MutableLiveData<String>()
+    private val _gear = MutableLiveData<String>()
+    private val _light = MutableLiveData<String>()
+    private val _lane = MutableLiveData<String>()
+    private val _speedLimit = MutableLiveData<String>()
+
+    val warningType : LiveData<String>
         get() = _warningType
-    val warningDirection : LiveData<Int>
+    val warningDirection : LiveData<String>
         get() = _warningDirection
-    val warningSeverity : LiveData<Int>
+    val warningSeverity : LiveData<String>
         get() = _warningSeverity
-    val warningRange : LiveData<Int>
+    val warningRange : LiveData<String>
         get() = _warningRange
-    val warningPushed : LiveData<Int>
+    val warningPushed : LiveData<String>
         get() = _warningPushed
-    val warningIconId : LiveData<Int>
+    val warningIconId : LiveData<String>
         get() = _warningIconId
-    val warningAudioId : LiveData<Int>
+    val warningAudioId : LiveData<String>
         get() = _warningAudioId
-    val warningTextId : LiveData<Int>
+    val warningTextId : LiveData<String>
         get() = _warningTextId
-    val informType : LiveData<Int>
+
+    val informType : LiveData<String>
         get() = _informType
-    val informDirection : LiveData<Int>
+    val informDirection : LiveData<String>
         get() = _informDirection
-    val informSeverity : LiveData<Int>
+    val informSeverity : LiveData<String>
         get() = _informSeverity
-    val informRange : LiveData<Int>
+    val informRange : LiveData<String>
         get() = _informRange
-    val informPushed : LiveData<Int>
+    val informPushed : LiveData<String>
         get() = _informPushed
-    val informIconId : LiveData<Int>
+    val informIconId : LiveData<String>
         get() = _informIconId
-    val informAudioId : LiveData<Int>
+    val informAudioId : LiveData<String>
         get() = _informAudioId
-    val informTextId : LiveData<Int>
+    val informTextId : LiveData<String>
         get() = _informTextId
-    val configurationHMI : LiveData<Int>
-        get() = _configurationHMI
-    val hazardState : LiveData<Int>
-        get() = _hazardState
-    val breakState : LiveData<Int>
-        get() = _breakState
-    val bluetoothState : LiveData<Int>
-        get() = _bluetoothState
+
+    val slPhase : LiveData<String>
+        get() = _slPhase
+    val slEnd : LiveData<String>
+        get() = _slEnd
+    val ltPhase : LiveData<String>
+        get() = _ltPhase
+    val ltEnd : LiveData<String>
+        get() = _ltEnd
+    val rtPhase : LiveData<String>
+        get() = _rtPhase
+    val rtEnd : LiveData<String>
+        get() = _rtEnd
+
+    val v2xstatus : LiveData<String>
+        get() = _v2xstatus
+    val speed : LiveData<String>
+        get() = _speed
+    val gear : LiveData<String>
+        get() = _gear
+    val light : LiveData<String>
+        get() = _light
+    val lane : LiveData<String>
+        get() = _lane
+    val speedLimit : LiveData<String>
+        get() = _speedLimit
 
     init {
         fetchCar()
     }
 
     fun fetchCar() {
-        GlobalScope.launch {
-            getCarUseCase.getWarning().collect {value ->
-                TODO()
-            }
-            getCarUseCase.getInform().collect {value ->
-                TODO()
-            }
-            getCarUseCase.getSPaT().collect {value ->
-                TODO()
-            }
-            getCarUseCase.getVehicle().collect {value ->
-                TODO()
-            }
+        GlobalScope.launch { fetchWaring() }
+        GlobalScope.launch { fetchInform() }
+        GlobalScope.launch { fetchSPat() }
+        GlobalScope.launch { fetchVehicle() }
+    }
+
+    suspend fun fetchVehicle() {
+        getCarUseCase.getVehicle().collect {value ->
+            Log.d("TEST", "fetchVehicle")
+            _v2xstatus.postValue(value.v2xstatus.toString())
+            _speed.postValue(value.speed.toString())
+            _gear.postValue(value.gear.toString())
+            _light.postValue(value.light.toString())
+            _lane.postValue(value.lane.toString())
+            _speedLimit.postValue(value.speed_limit.toString())
+        }
+    }
+
+    suspend fun fetchSPat() {
+        getCarUseCase.getSPaT().collect {value ->
+            Log.d("TEST", "fetchSPat")
+            _slPhase.postValue(value.sl_phase.toString())
+            _slEnd.postValue(value.sl_end.toString())
+            _ltPhase.postValue(value.lt_phase.toString())
+            _ltEnd.postValue(value.lt_end.toString())
+            _rtPhase.postValue(value.rt_phase.toString())
+            _rtEnd.postValue(value.rt_end.toString())
+        }
+    }
+
+    suspend fun fetchWaring() {
+        getCarUseCase.getWarning().collect {value ->
+            Log.d("TEST", "fetchWaring")
+            _warningType.postValue(value.type.toString())
+            _warningDirection.postValue(value.direction.toString())
+            _warningSeverity.postValue(value.severity.toString())
+            _warningRange.postValue(value.range.toString())
+            _warningPushed.postValue(value.pushed.toString())
+            _warningIconId.postValue(value.icon_id.toString())
+            _warningAudioId.postValue(value.audio_id.toString())
+            _warningTextId.postValue(value.text_id.toString())
+        }
+    }
+
+    suspend fun fetchInform() {
+        getCarUseCase.getInform().collect {value ->
+            Log.d("TEST", "fetchInform")
+            _informType.postValue(value.type.toString())
+            _informDirection.postValue(value.direction.toString())
+            _informSeverity.postValue(value.severity.toString())
+            _informRange.postValue(value.range.toString())
+            _informPushed.postValue(value.pushed.toString())
+            _informIconId.postValue(value.icon_id.toString())
+            _informAudioId.postValue(value.audio_id.toString())
+            _informTextId.postValue(value.text_id.toString())
         }
     }
 }

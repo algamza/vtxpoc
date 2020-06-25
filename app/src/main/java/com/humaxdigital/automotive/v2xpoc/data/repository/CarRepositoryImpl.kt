@@ -9,18 +9,18 @@ import kotlinx.coroutines.flow.map
 
 class CarRepositoryImpl constructor(private val api : CarApi) : CarRepository {
     override fun getWarning(): Flow<V2XWarning> {
-        return api.getWarning().map {CarSignalMapper().mapToEntity(it)}
+        return api.getWarning().map { CarSignalMapper().mapToEntity(it) }
     }
 
     override fun getInform(): Flow<V2XInform> {
-        return api.getInform().map { CarSignalMapper().mapToEntity(it)}
+        return api.getInform().map { CarSignalMapper().mapToEntity(it) }
     }
 
     override fun getVehicle(): Flow<V2XVehicleStatus> {
-        return api.getVehicle().map { CarSignalMapper().mapToEntity(it)}
+        return api.getVehicle().map { CarSignalMapper().mapToEntity(it) }
     }
 
     override fun getSPaT(): Flow<V2XSPaT> {
-        return api.getSPaT().map { CarSignalMapper().mapToEntity(it)}
+        return api.getSPaT().map { CarSignalMapper().mapToEntity(it) }
     }
 }

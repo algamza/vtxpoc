@@ -3,7 +3,6 @@ package com.humaxdigital.automotive.v2xpoc.presentation.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.util.Log
 import com.humaxdigital.automotive.v2xpoc.domain.usecases.GetCarUseCase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
@@ -22,17 +21,23 @@ class TestService : Service() {
         super.onCreate()
 
         GlobalScope.launch {
-            getCarUseCase.getWarning().collect {value ->
-                TODO()
-            }
             getCarUseCase.getInform().collect {value ->
-                TODO()
+                // TODO()
             }
+        }
+        GlobalScope.launch {
+            getCarUseCase.getWarning().collect {value ->
+                // TODO()
+            }
+        }
+        GlobalScope.launch {
             getCarUseCase.getSPaT().collect {value ->
-                TODO()
+                // TODO()
             }
+        }
+        GlobalScope.launch {
             getCarUseCase.getVehicle().collect {value ->
-                TODO()
+                // TODO()
             }
         }
     }

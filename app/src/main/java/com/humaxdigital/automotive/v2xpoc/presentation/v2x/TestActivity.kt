@@ -17,16 +17,9 @@ class TestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         bind.test = testmodel
+        bind.setLifecycleOwner(this)
 
-        testmodel.status.observe(this, Observer { bind.status.text = it.toString() })
-        testmodel.vehicleSpeed.observe(this, Observer { bind.vehicleSpeed.text = it.toString() })
-        testmodel.gearState.observe(this, Observer { bind.gearState.text = it.toString() })
-        testmodel.turnLightState.observe(this, Observer { bind.turnLightState.text = it.toString() })
-        testmodel.speedLimit.observe(this, Observer { bind.speedLimit.text = it.toString() })
-        testmodel.configurationHMI.observe(this, Observer { bind.configurationHMI.text = it.toString() })
-        testmodel.hazardState.observe(this, Observer { bind.hazardState.text = it.toString() })
-        testmodel.breakState.observe(this, Observer { bind.breakState.text = it.toString() })
-        testmodel.bluetoothState.observe(this, Observer { bind.bluetoothState.text = it.toString() })
+        /*
         testmodel.warningType.observe(this, Observer { bind.warningType.text = it.toString() })
         testmodel.warningDirection.observe(this, Observer { bind.warningDirection.text = it.toString() })
         testmodel.warningSeverity.observe(this, Observer { bind.warningSeverity.text = it.toString() })
@@ -43,5 +36,19 @@ class TestActivity : AppCompatActivity() {
         testmodel.informIconId.observe(this, Observer { bind.informIconId.text = it.toString() })
         testmodel.informAudioId.observe(this, Observer { bind.informAudioId.text = it.toString() })
         testmodel.informTextId.observe(this, Observer { bind.informTextId.text = it.toString() })
+        testmodel.slPhase.observe(this, Observer { bind.slPhase.text = it.toString() })
+        testmodel.slEnd.observe(this, Observer { bind.slEnd.text = it.toString() })
+        testmodel.ltPhase.observe(this, Observer { bind.ltPhase.text = it.toString() })
+        testmodel.ltEnd.observe(this, Observer { bind.ltEnd.text = it.toString() })
+        testmodel.rtPhase.observe(this, Observer { bind.rtPhase.text = it.toString() })
+        testmodel.rtEnd.observe(this, Observer { bind.rtEnd.text = it.toString() })
+        testmodel.v2xstatus.observe(this, Observer { bind.v2xstatus.text = it.toString() })
+        testmodel.speed.observe(this, Observer { bind.speed.text = it.toString() })
+        testmodel.gear.observe(this, Observer { bind.gear.text = it.toString() })
+        testmodel.light.observe(this, Observer { bind.light.text = it.toString() })
+        testmodel.lane.observe(this, Observer { bind.lane.text = it.toString() })
+        testmodel.speedLimit.observe(this, Observer { bind.speedLimit.text = it.toString() })
+
+         */
     }
 }

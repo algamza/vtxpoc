@@ -105,7 +105,7 @@ class CarSignalMapper constructor() {
         return _type
     }
 
-    private fun getDirection(direction:Int) : Direction {
+    private fun getDirection(direction:Int) : DIRECTION {
         var left = ONOFF.OFF
         var right = ONOFF.OFF
         var forward = ONOFF.OFF
@@ -167,6 +167,6 @@ class CarSignalMapper constructor() {
                 right=ONOFF.ON
             }
         }
-        return Direction(left, right, forward, backward)
+        return DIRECTION(left, right, forward, backward)
     }
 }
