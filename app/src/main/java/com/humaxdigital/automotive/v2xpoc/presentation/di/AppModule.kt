@@ -1,6 +1,7 @@
 package com.humaxdigital.automotive.v2xpoc.presentation.di
 
 
+import android.speech.tts.TextToSpeech
 import com.humaxdigital.automotive.v2xpoc.data.car.CarApi
 import com.humaxdigital.automotive.v2xpoc.data.repository.CarRepositoryImpl
 import com.humaxdigital.automotive.v2xpoc.domain.repositories.CarRepository
@@ -13,9 +14,13 @@ import org.koin.dsl.module.module
 
 
 val mRepositoryModules = module {
-    single(name=CAR) { createCar(androidApplication()) }
     single(name=CAR_API) { CarApi(get(CAR)) }
     single { CarRepositoryImpl(api = get(CAR_API)) as CarRepository }
+}
+
+val mAndroidModule = module {
+    single(name=CAR) { createCar(androidApplication()) }
+    single(name=TTS) { TextToSpeech(androidApplication()) {} }
 }
 
 val mUseCaseModules = module {
@@ -24,9 +29,10 @@ val mUseCaseModules = module {
 
 val mViewModels = module {
     viewModel { TestViewModel(getCarUseCase = get(GET_CAR_USECASE)) }
-    viewModel { TestMainViewModel(getCarUseCase = get(GET_CAR_USECASE)) }
+    viewModel { TestMainViewModel(context = androidApplication(), getCarUseCase = get(GET_CAR_USECASE), tts = get(TTS)) }
 }
 
 private const val CAR = "car"
 private const val CAR_API = "carapi"
 private const val GET_CAR_USECASE = "getCarUseCase"
+private const val TTS = "tts"

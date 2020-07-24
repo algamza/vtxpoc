@@ -177,11 +177,13 @@
             android:layout_height="51dp">
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/text_warn_info"
                 android:layout_width="1055dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:text="TextView" />
+                android:textSize="50px"
+                android:textColor="#ff0000"
+                android:text="@{test.text_warning}" />
         </FrameLayout>
 
         <FrameLayout

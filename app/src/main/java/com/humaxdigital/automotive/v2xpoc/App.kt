@@ -2,6 +2,7 @@ package com.humaxdigital.automotive.v2xpoc
 
 import android.app.Application
 import android.content.Intent
+import com.humaxdigital.automotive.v2xpoc.presentation.di.mAndroidModule
 import com.humaxdigital.automotive.v2xpoc.presentation.di.mRepositoryModules
 import com.humaxdigital.automotive.v2xpoc.presentation.di.mUseCaseModules
 import com.humaxdigital.automotive.v2xpoc.presentation.di.mViewModels
@@ -18,7 +19,7 @@ class App : Application() {
 
     private fun loadKoin() {
         startKoin(this,
-            listOf(mRepositoryModules, mUseCaseModules, mViewModels)
+            listOf(mAndroidModule, mRepositoryModules, mUseCaseModules, mViewModels)
         )
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.humaxdigital.automotive.v2xpoc.domain.usecases.GetCarUseCase
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -104,17 +105,23 @@ class TestViewModel(private val getCarUseCase: GetCarUseCase) : ViewModel() {
 
     init {
         fetchCar()
+        registCallback()
     }
 
     fun fetchCar() {
-        GlobalScope.launch { fetchWaring() }
-        GlobalScope.launch { fetchInform() }
-        GlobalScope.launch { fetchSPat() }
-        GlobalScope.launch { fetchVehicle() }
     }
 
-    suspend fun fetchVehicle() {
-        getCarUseCase.getVehicle().collect {value ->
+    fun registCallback() {
+        GlobalScope.launch {
+            async { callbackWaring() }
+            async { callbackInform() }
+            async { callbackSPat() }
+            async { callbackVehicleStatus() }
+        }
+    }
+
+    suspend fun callbackVehicleStatus() {
+        getCarUseCase.callbackVehicleStatus().collect {value ->
             Log.d("TEST", "fetchVehicle")
             _v2xstatus.postValue(value.v2xstatus.toString())
             _speed.postValue(value.speed.toString())
@@ -125,8 +132,8 @@ class TestViewModel(private val getCarUseCase: GetCarUseCase) : ViewModel() {
         }
     }
 
-    suspend fun fetchSPat() {
-        getCarUseCase.getSPaT().collect {value ->
+    suspend fun callbackSPat() {
+        getCarUseCase.callbackSPaT().collect {value ->
             Log.d("TEST", "fetchSPat")
             _slPhase.postValue(value.sl_phase.toString())
             _slEnd.postValue(value.sl_end.toString())
@@ -137,8 +144,8 @@ class TestViewModel(private val getCarUseCase: GetCarUseCase) : ViewModel() {
         }
     }
 
-    suspend fun fetchWaring() {
-        getCarUseCase.getWarning().collect {value ->
+    suspend fun callbackWaring() {
+        getCarUseCase.callbackWarning().collect {value ->
             Log.d("TEST", "fetchWaring")
             _warningType.postValue(value.type.toString())
             _warningDirection.postValue(value.direction.toString())
@@ -151,8 +158,8 @@ class TestViewModel(private val getCarUseCase: GetCarUseCase) : ViewModel() {
         }
     }
 
-    suspend fun fetchInform() {
-        getCarUseCase.getInform().collect {value ->
+    suspend fun callbackInform() {
+        getCarUseCase.callbackInform().collect {value ->
             Log.d("TEST", "fetchInform")
             _informType.postValue(value.type.toString())
             _informDirection.postValue(value.direction.toString())

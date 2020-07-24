@@ -21,24 +21,36 @@ class TestService : Service() {
         super.onCreate()
 
         GlobalScope.launch {
-            getCarUseCase.getInform().collect {value ->
+            /*
+            getCarUseCase.callbackInform().collect {value ->
                 // TODO()
             }
+
+             */
         }
         GlobalScope.launch {
-            getCarUseCase.getWarning().collect {value ->
+            /*
+            getCarUseCase.callbackWarning().collect {value ->
                 // TODO()
             }
+
+             */
         }
         GlobalScope.launch {
-            getCarUseCase.getSPaT().collect {value ->
+            /*
+            getCarUseCase.callbackSPaT().collect {value ->
                 // TODO()
             }
+
+             */
         }
         GlobalScope.launch {
-            getCarUseCase.getVehicle().collect {value ->
+            /*
+            getCarUseCase.callbackVehicleStatus().collect {value ->
                 // TODO()
             }
+
+             */
         }
     }
 }
