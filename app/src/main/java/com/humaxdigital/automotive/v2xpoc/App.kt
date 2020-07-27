@@ -2,6 +2,7 @@ package com.humaxdigital.automotive.v2xpoc
 
 import android.app.Application
 import android.content.Intent
+import android.os.Build
 import com.humaxdigital.automotive.v2xpoc.presentation.di.mAndroidModule
 import com.humaxdigital.automotive.v2xpoc.presentation.di.mRepositoryModules
 import com.humaxdigital.automotive.v2xpoc.presentation.di.mUseCaseModules
@@ -13,8 +14,13 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         loadKoin()
-
-        startService(Intent(this, TestService::class.java))
+        /*
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ) {
+            startForegroundService(Intent(this, TestService::class.java))
+        } else {
+            startService(Intent(this, TestService::class.java))
+        }
+*/
     }
 
     private fun loadKoin() {

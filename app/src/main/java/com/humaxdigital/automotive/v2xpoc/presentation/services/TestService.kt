@@ -28,29 +28,5 @@ class TestService : Service() {
 
              */
         }
-        GlobalScope.launch {
-            /*
-            getCarUseCase.callbackWarning().collect {value ->
-                // TODO()
-            }
-
-             */
-        }
-        GlobalScope.launch {
-            /*
-            getCarUseCase.callbackSPaT().collect {value ->
-                // TODO()
-            }
-
-             */
-        }
-        GlobalScope.launch {
-            /*
-            getCarUseCase.callbackVehicleStatus().collect {value ->
-                // TODO()
-            }
-
-             */
-        }
     }
 }
