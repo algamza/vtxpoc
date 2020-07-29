@@ -2,6 +2,7 @@ package com.humaxdigital.automotive.v2xpoc.presentation.v2x
 
 import android.app.Application
 import android.content.Context
+import android.service.trust.TrustAgentService
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -20,6 +21,7 @@ import java.lang.Exception
 import java.util.*
 
 class TestMainViewModel(private val context:Context, private val getCarUseCase: GetCarUseCase, private val tts: TextToSpeech) : ViewModel() {
+    private val TAG = "TestMainViewModel"
     private val _img_back = MutableLiveData<Int>()
 
     private val _img_widget_light_left = MutableLiveData<Int>()
@@ -137,6 +139,7 @@ class TestMainViewModel(private val context:Context, private val getCarUseCase: 
             getCarUseCase.getWarning()
                 .buffer()
                 .collect() {value ->
+                    Log.d(TAG, value.toString())
                     mapToWarningType(value.type)
                     mapToWarningDirection(value.direction)
                     mapToWarningSeverity(value.severity)
@@ -149,6 +152,7 @@ class TestMainViewModel(private val context:Context, private val getCarUseCase: 
             getCarUseCase.getInform()
                 .buffer()
                 .collect() { value ->
+                    Log.d(TAG, value.toString())
                     mapToInformType(value.type)
                     mapToInformDirection(value.direction)
                     mapToInformSeverity(value.severity)
@@ -161,6 +165,7 @@ class TestMainViewModel(private val context:Context, private val getCarUseCase: 
             getCarUseCase.getVehicleStatus()
                 .buffer()
                 .collect() { value ->
+                    Log.d(TAG, value.toString())
                     mapToTurnLight(value.light)
                     mapToSpeed(value.speed)
                     mapToSpeedLimit(value.speed_limit)
@@ -171,7 +176,22 @@ class TestMainViewModel(private val context:Context, private val getCarUseCase: 
             getCarUseCase.getSPaT()
                 .buffer()
                 .collect() { value ->
-                    Log.d("TEST", "getSPaT")
+                    Log.d(TAG, value.toString())
+                }
+            getCarUseCase.getHVPos()
+                .buffer()
+                .collect() {value ->
+                    Log.d(TAG, value.toString())
+                }
+            getCarUseCase.getHVMotion()
+                .buffer()
+                .collect() { value ->
+                    Log.d(TAG, value.toString())
+                }
+            getCarUseCase.getRV1Status()
+                .buffer()
+                .collect() { value ->
+                    Log.d(TAG, value.toString())
                 }
         }
     }
@@ -190,6 +210,7 @@ class TestMainViewModel(private val context:Context, private val getCarUseCase: 
             getCarUseCase.callbackWarning()
                 .buffer()
                 .collectLatest {value ->
+                    Log.d(TAG, value.toString())
                     mapToWarningType(value.type)
                     mapToWarningDirection(value.direction)
                     mapToWarningSeverity(value.severity)
@@ -207,6 +228,7 @@ class TestMainViewModel(private val context:Context, private val getCarUseCase: 
             getCarUseCase.callbackInform()
                 .buffer()
                 .collectLatest {value ->
+                    Log.d(TAG, value.toString())
                     mapToInformType(value.type)
                     mapToInformDirection(value.direction)
                     mapToInformSeverity(value.severity)
@@ -224,7 +246,7 @@ class TestMainViewModel(private val context:Context, private val getCarUseCase: 
             getCarUseCase.callbackSPaT()
                 .buffer()
                 .collectLatest {value ->
-                    Log.d("TEST", "fetchSPat")
+                    Log.d(TAG, value.toString())
                     /*
                     _slPhase.postValue(value.sl_phase.toString())
                     _slEnd.postValue(value.sl_end.toString())
@@ -245,6 +267,7 @@ class TestMainViewModel(private val context:Context, private val getCarUseCase: 
                 //.conflate()
                 .buffer()
                 .collectLatest {value ->
+                    Log.d(TAG, value.toString())
                     mapToTurnLight(value.light)
                     mapToSpeed(value.speed)
                     mapToSpeedLimit(value.speed_limit)

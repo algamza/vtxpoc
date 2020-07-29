@@ -30,21 +30,21 @@ data class VehicleStatus(
 )
 
 data class HVPos(
-    var lon: Double,
-    var lat: Double
+    var lon: Long,
+    var lat: Long
 )
 
 data class HVMotion(
     var motion_heading: Int,
     var vehicle_heading: Int,
     var vehicle_speed: Int,
-    var alt: Double
+    var alt: Long
 )
 
 data class RSUStatus(
     var text_id: Int,
     var icon_id: Int,
-    var lon_offset: Double,
-    var lat_offset: Double
+    var lon_offset: Long,
+    var lat_offset: Long
 )
 

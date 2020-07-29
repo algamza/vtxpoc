@@ -14,7 +14,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         loadKoin()
-        /*
+/*
         if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ) {
             startForegroundService(Intent(this, TestService::class.java))
         } else {

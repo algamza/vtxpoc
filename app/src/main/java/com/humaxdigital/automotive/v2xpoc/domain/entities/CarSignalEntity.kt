@@ -61,20 +61,20 @@ data class V2XSPaT(
 )
 
 data class V2XHVPos(
-    var lon: Double,
-    var lat: Double
+    var lon: Long,
+    var lat: Long
 )
 
 data class V2XHVMotion(
     var motion_heading: Int,
     var vehicle_heading: Int,
     var vehicle_speed: Int,
-    var alt: Double
+    var alt: Long
 )
 
 data class V2XRSUStatus(
     var text_id: Int,
     var icon_id: Int,
-    var lon_offset: Double,
-    var lat_offset: Double
+    var lon_offset: Long,
+    var lat_offset: Long
 )
