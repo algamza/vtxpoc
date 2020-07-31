@@ -35,9 +35,51 @@ class CarApi(car: CarEx) {
     private val ID_AREA_V2X_VEHICLE_STATUS = 8
     private val ID_AREA_V2X_WARNING = 9
 
+    private var callback_warning : ((WarnInform) -> Unit)? = null
+    private var callback_inform : ((WarnInform) -> Unit)? = null
+    private var callback_vehicle : ((VehicleStatus) -> Unit)? = null
+    private var callback_spat : ((SPaT) -> Unit)? = null
+    private var callback_hvpos : ((HVPos) -> Unit)? = null
+    private var callback_hvmotion : ((HVMotion) -> Unit)? = null
+    private var callback_rv1 : ((RSUStatus) -> Unit)? = null
+    private var callback_rv2 : ((RSUStatus) -> Unit)? = null
+    private var callback_rv3 : ((RSUStatus) -> Unit)? = null
+    private var callback_rv4 : ((RSUStatus) -> Unit)? = null
+
+
     private val _car = car
 
-    init { }
+    init {
+        GlobalScope.launch {
+            while (!_car.isConnected) {}
+            var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
+            var callback = object : CarPropertyManager.CarPropertyEventListener {
+                override fun onChangeEvent(p0: CarPropertyValue<*>?) {
+                    try {
+                        Log.d(TAG, "areaId="+p0!!.areaId)
+                        when(p0!!.areaId) {
+                            ID_AREA_V2X_WARNING -> { callback_warning!!(CarSignalParser().parseAsWarnInform(p0!!.value as ByteArray)) }
+                            ID_AREA_V2X_INFORM -> { callback_inform!!(CarSignalParser().parseAsWarnInform(p0!!.value as ByteArray)) }
+                            ID_AREA_V2X_VEHICLE_STATUS -> { callback_vehicle!!(CarSignalParser().parseAsVehicleStatus(p0!!.value as ByteArray)) }
+                            ID_AREA_V2X_SPAT -> { callback_spat!!(CarSignalParser().parseAsSPaT(p0!!.value as ByteArray)) }
+                            ID_AREA_V2X_HV_POS -> { callback_hvpos!!(CarSignalParser().parseAsHVPos(p0!!.value as ByteArray)) }
+                            ID_AREA_V2X_HV_MOTION -> { callback_hvmotion!!(CarSignalParser().parseAsHVMotion(p0!!.value as ByteArray)) }
+                            ID_AREA_V2X_RV1_STATUS -> { callback_rv1!!(CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)) }
+                            ID_AREA_V2X_RV2_STATUS -> { callback_rv2!!(CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)) }
+                            ID_AREA_V2X_RV3_STATUS -> { callback_rv3!!(CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)) }
+                            ID_AREA_V2X_RV4_STATUS -> { callback_rv4!!(CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)) }
+                        }
+                    } catch (e:Exception) {
+                        Log.e(TAG, e.toString())
+                    }
+                }
+                override fun onErrorEvent(p0: Int, p1: Int) {
+                    Log.d(TAG, "callbackWarning=error")
+                }
+            }
+            manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
+        }
+    }
 
     fun getWarning() = flow<WarnInform> {
         while (!_car.isConnected) {}
@@ -171,222 +213,63 @@ class CarApi(car: CarEx) {
 
 
     fun callbackWarning() = callbackFlow<WarnInform> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_WARNING ) return
-                    var warning = CarSignalParser().parseAsWarnInform(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackWarning="+warning.toString())
-                    sendBlocking(warning)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackWarning=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setWarningCallback { sendBlocking(it) }
+        awaitClose { }
     }
 
     fun callbackInform() = callbackFlow<WarnInform> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_INFORM ) return
-                    var inform = CarSignalParser().parseAsWarnInform(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackInform="+inform.toString())
-                    sendBlocking(inform)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackInform=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setInformCallback { sendBlocking(it) }
+        awaitClose { }
     }
 
     fun callbackVehicleStatus() = callbackFlow<VehicleStatus> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_VEHICLE_STATUS ) return
-                    var status = CarSignalParser().parseAsVehicleStatus(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackVehicleStatus="+status.toString())
-                    sendBlocking(status)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackVehicleStatus=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setVehicleCallback { sendBlocking(it) }
+        awaitClose { }
     }
 
     fun callbackSPaT() = callbackFlow<SPaT> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_SPAT ) return
-                    var spat = CarSignalParser().parseAsSPaT(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackSPaT="+spat.toString())
-                    sendBlocking(spat)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackSPaT=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setSPaTCallback { sendBlocking(it) }
+        awaitClose { }
     }
 
     fun callbackHVPos() = callbackFlow<HVPos> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_HV_POS ) return
-                    var pos = CarSignalParser().parseAsHVPos(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackHVPos="+pos.toString())
-                    sendBlocking(pos)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackHVPos=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setHVPosCallback { sendBlocking(it) }
+        awaitClose { }
     }
 
     fun callbackHVMotion() = callbackFlow<HVMotion> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_HV_MOTION ) return
-                    var motion = CarSignalParser().parseAsHVMotion(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackHVMotion="+motion.toString())
-                    sendBlocking(motion)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackHVMotion=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setHVMotionCallback { sendBlocking(it) }
+        awaitClose { }
     }
 
     fun callbackRV1Status() = callbackFlow<RSUStatus> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_RV1_STATUS ) return
-                    var rv = CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackRV1Status="+rv.toString())
-                    sendBlocking(rv)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackRV1Status=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setRV1Callback { sendBlocking(it) }
+        awaitClose { }
     }
 
     fun callbackRV2Status() = callbackFlow<RSUStatus> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_RV2_STATUS ) return
-                    var rv = CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackRV2Status="+rv.toString())
-                    sendBlocking(rv)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackRV3Status=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setRV2Callback { sendBlocking(it) }
+        awaitClose { }
     }
 
     fun callbackRV3Status() = callbackFlow<RSUStatus> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_RV3_STATUS ) return
-                    var rv = CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackRV3Status="+rv.toString())
-                    sendBlocking(rv)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackRV3Status=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setRV3Callback { sendBlocking(it) }
+        awaitClose { }
     }
 
     fun callbackRV4Status() = callbackFlow<RSUStatus> {
-        while (!_car.isConnected) {}
-        var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
-        var callback = object : CarPropertyManager.CarPropertyEventListener {
-            override fun onChangeEvent(p0: CarPropertyValue<*>?) {
-                try {
-                    if ( p0!!.areaId != ID_AREA_V2X_RV4_STATUS ) return
-                    var rv = CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)
-                    Log.d(TAG, "callbackRV4Status="+rv.toString())
-                    sendBlocking(rv)
-                } catch (e:Exception) {
-                    Log.e(TAG, e.toString())
-                }
-            }
-            override fun onErrorEvent(p0: Int, p1: Int) {
-                Log.d(TAG, "callbackRV4Status=error")
-            }
-        }
-        manager.registerListener(callback, ID_PROPERTY_V2X, 0.0f)
-        awaitClose { manager.unregisterListener(callback) }
+        setRV4Callback { sendBlocking(it) }
+        awaitClose { }
     }
+
+    private fun setWarningCallback(obj:(WarnInform)->Unit) { callback_warning = obj }
+    private fun setInformCallback(obj:(WarnInform)->Unit) { callback_inform = obj }
+    private fun setVehicleCallback(obj:(VehicleStatus)->Unit) { callback_vehicle = obj }
+    private fun setSPaTCallback(obj:(SPaT)->Unit) { callback_spat = obj }
+    private fun setHVPosCallback(obj:(HVPos)->Unit) { callback_hvpos = obj }
+    private fun setHVMotionCallback(obj:(HVMotion)->Unit) { callback_hvmotion = obj }
+    private fun setRV1Callback(obj:(RSUStatus)->Unit) { callback_rv1 = obj }
+    private fun setRV2Callback(obj:(RSUStatus)->Unit) { callback_rv2 = obj }
+    private fun setRV3Callback(obj:(RSUStatus)->Unit) { callback_rv3 = obj }
+    private fun setRV4Callback(obj:(RSUStatus)->Unit) { callback_rv4 = obj }
 }

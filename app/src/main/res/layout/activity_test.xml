@@ -27,7 +27,7 @@
                 android:textSize="@dimen/menu_text_size"
                 android:text="Warning" />
             <TextView
-                android:id="@+id/waring"
+                android:id="@+id/warning"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="9"

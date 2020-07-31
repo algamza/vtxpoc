@@ -86,7 +86,9 @@ class TestViewModel(private val getCarUseCase: GetCarUseCase) : ViewModel() {
     }
 
     suspend fun callbackInform() {
-        getCarUseCase.callbackInform().collect {value -> _inform.postValue(value.toString().substring(value.toString().indexOf("(")+1, value.toString().lastIndex)) }
+        getCarUseCase.callbackInform().collect {value ->
+            _inform.postValue(value.toString().substring(value.toString().indexOf("(")+1, value.toString().lastIndex))
+        }
     }
 
     suspend fun callbackVehicleStatus() {
