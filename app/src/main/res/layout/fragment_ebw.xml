@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/v2x_bg_basic">
+
+        <ImageView
+            android:id="@+id/img_bg_textwarning_dim"
+            android:layout_width="1280px"
+            android:layout_height="158px"
+            android:src="@drawable/v2x_bg_textwarning_dim"/>
+
+        <TextView
+            android:id="@+id/text_ebw_warning"
+            android:layout_width="656px"
+            android:layout_height="97px"
+            android:layout_marginLeft="316px"
+            android:layout_marginTop="25px"
+            android:gravity="center_horizontal|top"
+            android:text="@{vm.warning_text}"
+            android:textSize="32px"
+            android:textColor="#ffffff" />
+
+        <ImageView
+            android:id="@+id/img_car_warning"
+            android:layout_width="161px"
+            android:layout_height="106px"
+            android:layout_marginLeft="562px"
+            android:layout_marginTop="142px"
+            android:src="@drawable/v2x_img_car_warning"/>
+
+        <ImageView
+            android:id="@+id/img_img_level_warning"
+            android:layout_width="267px"
+            android:layout_height="151px"
+            android:layout_marginTop="248px"
+            android:layout_gravity="center_horizontal"
+            app:id_range="@{vm.id_range}" />
+
+        <ImageView
+            android:id="@+id/img_ic_warning"
+            android:layout_width="161px"
+            android:layout_height="106px"
+            android:layout_marginTop="195px"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/v2x_ic_warning"/>
+
+        <ImageView
+            android:id="@+id/img_car_basic"
+            android:layout_width="504px"
+            android:layout_height="329px"
+            android:layout_marginTop="301px"
+            android:layout_gravity="center_horizontal"
+            app:id_light_brake="@{vm.id_light_brake}" />
+    </FrameLayout>
+</layout>

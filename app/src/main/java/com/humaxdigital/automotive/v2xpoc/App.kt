@@ -1,13 +1,10 @@
 package com.humaxdigital.automotive.v2xpoc
 
 import android.app.Application
-import android.content.Intent
-import android.os.Build
-import com.humaxdigital.automotive.v2xpoc.presentation.di.mAndroidModule
-import com.humaxdigital.automotive.v2xpoc.presentation.di.mRepositoryModules
-import com.humaxdigital.automotive.v2xpoc.presentation.di.mUseCaseModules
-import com.humaxdigital.automotive.v2xpoc.presentation.di.mViewModels
-import com.humaxdigital.automotive.v2xpoc.presentation.services.TestService
+import com.humaxdigital.automotive.v2xpoc.di.mAndroidModule
+import com.humaxdigital.automotive.v2xpoc.di.mRepositoryModules
+import com.humaxdigital.automotive.v2xpoc.di.mUseCaseModules
+import com.humaxdigital.automotive.v2xpoc.di.mViewModels
 import org.koin.android.ext.android.startKoin
 
 class App : Application() {

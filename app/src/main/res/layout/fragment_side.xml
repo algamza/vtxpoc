@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainViewModel" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/v2x_bg_subcontents">
+        <ImageView
+            android:id="@+id/img_ic_arrow_left"
+            android:layout_width="112px"
+            android:layout_height="104px"
+            android:layout_marginLeft="120px"
+            android:layout_marginTop="94px"
+            app:id_light_left="@{vm.id_light_left}" />
+        <ImageView
+            android:id="@+id/img_ic_emergency"
+            android:layout_width="112px"
+            android:layout_height="104px"
+            android:layout_marginLeft="266px"
+            android:layout_marginTop="94px"
+            app:id_light_hazard="@{vm.id_light_hazard}" />
+        <ImageView
+            android:id="@+id/img_ic_arrow_right"
+            android:layout_width="112px"
+            android:layout_height="104px"
+            android:layout_marginLeft="412px"
+            android:layout_marginTop="94px"
+            app:id_light_right="@{vm.id_light_right}" />
+        <ImageView
+            android:id="@+id/img_sub_line_1"
+            android:layout_width="404px"
+            android:layout_height="2px"
+            android:layout_marginLeft="120px"
+            android:layout_marginTop="205px"
+            android:src="@drawable/v2x_img_sub_line" />
+        <TextView
+            android:id="@+id/text_sub_speed"
+            android:layout_width="198px"
+            android:layout_height="104px"
+            android:layout_marginLeft="120px"
+            android:layout_marginTop="247px"
+            android:gravity="right|center_vertical"
+            android:text="@{vm.vehicle_speed.toString()}"
+            android:textSize="94px"
+            android:textColor="#68d8fe" />
+        <TextView
+            android:id="@+id/text_sub_km"
+            android:layout_width="128px"
+            android:layout_height="63px"
+            android:layout_marginLeft="322px"
+            android:layout_marginTop="300px"
+            android:gravity="left|center_vertical"
+            android:text="km/h"
+            android:textSize="40px"
+            android:textColor="#68d8fe" />
+        <ImageView
+            android:id="@+id/img_sub_line_2"
+            android:layout_width="404px"
+            android:layout_height="2px"
+            android:layout_marginLeft="120px"
+            android:layout_marginTop="393px"
+            android:src="@drawable/v2x_img_sub_line" />
+        <ImageView
+            android:id="@+id/img_ic_gear_park"
+            android:layout_width="96px"
+            android:layout_height="96px"
+            android:layout_marginLeft="120px"
+            android:layout_marginTop="423px"
+            app:id_gear_p="@{vm.id_gear_p}" />
+        <ImageView
+            android:id="@+id/img_ic_gear_reverse"
+            android:layout_width="96px"
+            android:layout_height="96px"
+            android:layout_marginLeft="224px"
+            android:layout_marginTop="423px"
+            app:id_gear_r="@{vm.id_gear_r}" />
+        <ImageView
+            android:id="@+id/img_ic_gear_neutral"
+            android:layout_width="96px"
+            android:layout_height="96px"
+            android:layout_marginLeft="328px"
+            android:layout_marginTop="423px"
+            app:id_gear_n="@{vm.id_gear_n}" />
+        <ImageView
+            android:id="@+id/img_ic_gear_forward"
+            android:layout_width="96px"
+            android:layout_height="96px"
+            android:layout_marginLeft="432px"
+            android:layout_marginTop="423px"
+            app:id_gear_d="@{vm.id_gear_d}" />
+        <ImageView
+            android:id="@+id/img_ic_gps"
+            android:layout_width="96px"
+            android:layout_height="54px"
+            android:layout_marginLeft="120px"
+            android:layout_marginTop="541px"
+            app:id_v2x_status_g="@{vm.id_v2x_status_g}" />
+        <ImageView
+            android:id="@+id/img_ic_v2v"
+            android:layout_width="96px"
+            android:layout_height="54px"
+            android:layout_marginLeft="224px"
+            android:layout_marginTop="541px"
+            app:id_v2x_status_v="@{vm.id_v2x_status_v}" />
+        <ImageView
+            android:id="@+id/img_ic_v2i"
+            android:layout_width="96px"
+            android:layout_height="54px"
+            android:layout_marginLeft="328px"
+            android:layout_marginTop="541px"
+            app:id_v2x_status_i="@{vm.id_v2x_status_i}" />
+        <ImageView
+            android:id="@+id/img_ic_app"
+            android:layout_width="96px"
+            android:layout_height="54px"
+            android:layout_marginLeft="432px"
+            android:layout_marginTop="541px"
+            app:id_v2x_status_a="@{vm.id_v2x_status_a}" />
+    </FrameLayout>
+
+</layout>

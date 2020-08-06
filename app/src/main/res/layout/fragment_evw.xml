@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainViewModel" />
+    </data>
+    <FrameLayout
+        android:id="@+id/fragment_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/v2x_bg_basic">
+        <ImageView
+            android:id="@+id/img_level_straight"
+            android:layout_width="267px"
+            android:layout_height="151px"
+            android:layout_marginLeft="506px"
+            android:layout_marginTop="247px"
+            android:src="@drawable/v2x_img_level_straight"/>
+        <ImageView
+            android:id="@+id/img_bg_textwarning_dim"
+            android:layout_width="1280px"
+            android:layout_height="158px"
+            android:src="@drawable/v2x_bg_textwarning_dim"/>
+        <ImageView
+            android:id="@+id/img_car_basic"
+            android:layout_width="504px"
+            android:layout_height="329px"
+            android:layout_marginTop="301px"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/v2x_img_car_basic"/>
+    </FrameLayout>
+</layout>
+
