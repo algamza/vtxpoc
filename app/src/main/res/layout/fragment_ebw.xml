@@ -47,12 +47,25 @@
             app:id_range="@{vm.id_range}" />
 
         <ImageView
-            android:id="@+id/img_ic_warning"
-            android:layout_width="161px"
-            android:layout_height="106px"
+            android:layout_width="88px"
+            android:layout_height="73px"
             android:layout_marginTop="195px"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/v2x_ic_warning"/>
+            app:id_warning_icon="@{vm.id_warning_icon}"/>
+
+        <TextView
+            android:layout_width="162px"
+            android:layout_height="52px"
+            android:layout_marginLeft="562px"
+            android:layout_marginTop="266px"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@{vm.warning_distance}"
+            android:textSize="42px"
+            android:textColor="#ffffff"
+            android:shadowColor="#000000"
+            android:shadowRadius="1.0"
+            android:shadowDx="2.0"
+            android:shadowDy="2.0"/>
 
         <ImageView
             android:id="@+id/img_car_basic"

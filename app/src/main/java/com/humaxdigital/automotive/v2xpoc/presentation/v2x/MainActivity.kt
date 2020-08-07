@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XPUSHED
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XTYPE
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private val TAG = this.javaClass.name
@@ -24,21 +24,25 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(R.id.fragment_side, SideFragment()).commit()
 
         vm.warning_pused.observe(this, Observer {
-            when(it) {
-                V2XPUSHED.ADD -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_main, mapToFragment(vm.warning_type.value!!) as Fragment)
-                        .commit()
+            try {
+                when(it) {
+                    V2XPUSHED.ADD -> {
+                        supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.fragment_main, mapToFragment(vm.warning_type.value!!) as Fragment)
+                            .commit()
+                    }
+                    V2XPUSHED.DELETE -> {
+                        supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.fragment_main, MainFragment())
+                            .commit()
+                    }
+                    V2XPUSHED.UPDATE -> {}
+                    V2XPUSHED.NONE -> {}
                 }
-                V2XPUSHED.DELETE -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_main, MainFragment())
-                        .commit()
-                }
-                V2XPUSHED.UPDATE -> {}
-                V2XPUSHED.NONE -> {}
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
             }
         })
     }
@@ -64,5 +68,4 @@ class MainActivity : AppCompatActivity() {
         V2XTYPE.TJW -> {}
         else -> MainFragment()
     }
-
 }

@@ -8,29 +8,44 @@
             type="com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainViewModel" />
     </data>
     <FrameLayout
-        android:id="@+id/fragment_popup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/v2x_bg_basic">
+
         <ImageView
-            android:id="@+id/img_level_straight"
-            android:layout_width="267px"
-            android:layout_height="151px"
-            android:layout_marginLeft="506px"
-            android:layout_marginTop="247px"
-            android:src="@drawable/v2x_img_level_straight"/>
-        <ImageView
-            android:id="@+id/img_bg_textwarning_dim"
+            android:id="@+id/img_v2x_bg_evw_dim"
             android:layout_width="1280px"
-            android:layout_height="158px"
-            android:src="@drawable/v2x_bg_textwarning_dim"/>
+            android:layout_height="630px"
+            android:src="@drawable/v2x_bg_evw_dim"/>
+
+        <TextView
+            android:id="@+id/text_ebw_warning"
+            android:layout_width="656px"
+            android:layout_height="97px"
+            android:layout_marginLeft="316px"
+            android:layout_marginTop="25px"
+            android:gravity="center_horizontal|top"
+            android:text="@{vm.warning_text}"
+            android:textSize="32px"
+            android:textColor="#ffffff" />
+
         <ImageView
-            android:id="@+id/img_car_basic"
-            android:layout_width="504px"
-            android:layout_height="329px"
-            android:layout_marginTop="301px"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/v2x_img_car_basic"/>
+            android:layout_width="622px"
+            android:layout_height="452px"
+            android:layout_marginLeft="329px"
+            android:layout_marginTop="142px"
+            app:id_warning_icon="@{vm.id_warning_icon}"/>
+
+        <TextView
+            android:layout_width="154px"
+            android:layout_height="50px"
+            android:layout_marginLeft="563px"
+            android:layout_marginTop="276px"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@{vm.warning_distance}"
+            android:textSize="46px"
+            android:textColor="#ffffff" />
+
     </FrameLayout>
 </layout>
 

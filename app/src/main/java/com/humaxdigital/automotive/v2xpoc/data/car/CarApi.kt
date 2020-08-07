@@ -56,7 +56,6 @@ class CarApi(car: CarEx) {
             var callback = object : CarPropertyManager.CarPropertyEventListener {
                 override fun onChangeEvent(p0: CarPropertyValue<*>?) {
                     try {
-                        Log.d(TAG, "areaId="+p0!!.areaId)
                         when(p0!!.areaId) {
                             ID_AREA_V2X_WARNING -> { callback_warning!!(CarSignalParser().parseAsWarnInform(p0!!.value as ByteArray)) }
                             ID_AREA_V2X_INFORM -> { callback_inform!!(CarSignalParser().parseAsWarnInform(p0!!.value as ByteArray)) }

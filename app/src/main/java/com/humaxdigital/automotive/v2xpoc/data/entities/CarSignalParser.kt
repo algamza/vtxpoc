@@ -1,5 +1,6 @@
 package com.humaxdigital.automotive.v2xpoc.data.entities
 
+import android.util.Log
 import java.nio.ByteBuffer
 
 class CarSignalParser constructor() {
@@ -12,8 +13,9 @@ class CarSignalParser constructor() {
         var audio_id = data[5]
         var text_id = data[6]
         var pushed = data[7]
-        return WarnInform(type.toInt(), direction.toInt(), severity.toInt(), range.toInt(),
-            icon_id.toInt(), audio_id.toInt(), text_id.toInt(), pushed.toInt())
+        return WarnInform(type.toUByte().toInt(), direction.toUByte().toInt(), severity.toUByte().toInt(),
+            range.toUByte().toInt(), icon_id.toUByte().toInt(), audio_id.toUByte().toInt(),
+            text_id.toUByte().toInt(), pushed.toUByte().toInt())
     }
 
     fun parseAsSPaT(data: ByteArray) : SPaT {
@@ -23,8 +25,8 @@ class CarSignalParser constructor() {
         var lt_end = data[3]
         var rt_phase = data[4]
         var rt_end = data[5]
-        return SPaT(sl_phase.toInt(), sl_end.toInt(), lt_phase.toInt(), lt_end.toInt(),
-            rt_phase.toInt(), rt_end.toInt())
+        return SPaT(sl_phase.toUByte().toInt(), sl_end.toUByte().toInt(), lt_phase.toUByte().toInt(),
+            lt_end.toUByte().toInt(), rt_phase.toUByte().toInt(), rt_end.toUByte().toInt())
     }
 
     fun parseAsVehicleStatus(data: ByteArray) : VehicleStatus {
@@ -34,8 +36,8 @@ class CarSignalParser constructor() {
         var light = data[3]
         var lane = data[4]
         var limit = data[5]
-        return VehicleStatus(status.toInt(), speed.toInt(), gear.toInt(), light.toInt(),
-            lane.toInt(), limit.toInt())
+        return VehicleStatus(status.toUByte().toInt(), speed.toUByte().toInt(), gear.toUByte().toInt(),
+            light.toUByte().toInt(), lane.toUByte().toInt(), limit.toUByte().toInt())
     }
 
     fun parseAsHVPos(data: ByteArray) : HVPos {

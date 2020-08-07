@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.databinding.FragmentEbwBinding
+import com.humaxdigital.automotive.v2xpoc.databinding.FragmentEvwBinding
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class EVWFragment : Fragment() {
@@ -24,7 +25,7 @@ class EVWFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val bind = (DataBindingUtil.inflate(inflater, R.layout.fragment_evw,
-            container, false) as FragmentEbwBinding)
+            container, false) as FragmentEvwBinding)
         bind.vm = vm
         bind.setLifecycleOwner(activity)
         return bind.root

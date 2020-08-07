@@ -3,7 +3,6 @@ package com.humaxdigital.automotive.v2xpoc.presentation.entities
 import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.domain.entities.*
 import com.humaxdigital.automotive.v2xpoc.domain.entities.PUSHED
-import com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainFragment
 
 class ResourceMapper constructor() {
     fun mapToLightHazard(light: LIGHT) = when(light.hazard) {
@@ -55,15 +54,68 @@ class ResourceMapper constructor() {
         true -> R.drawable.v2x_ic_v2i_p
         false -> R.drawable.v2x_ic_v2i_n
     }
-    fun mapToWarningText(index: Int) = when(index) {
-        1->"Emergency Brake Warning"
-        else ->""
+    fun mapToWarningText(index: Int, type: TYPE) = when(type) {
+        TYPE.EBW -> {
+            when(index) {
+                1 -> "Emergency Brake Warning!"
+                else -> ""
+            }
+        }
+        TYPE.EVW -> {
+            when(index) {
+                1 -> "Emergency Vehicle Approach\nSlow Down!"
+                2 -> "Emergency Vehicle Approach\nFrom Right"
+                3 -> "Emergency Vehicle Approach\nFrom Left"
+                else -> ""
+            }
+        }
+        else -> ""
+    }
+    fun mapToWarningAudio(index: Int, type: TYPE) = when(type) {
+        TYPE.EBW -> {
+            when(index) {
+                1 -> "Emergency Brake Warning!"
+                else -> ""
+            }
+        }
+        TYPE.EVW -> {
+            when(index) {
+                1 -> "Emergency Vehicle Approach Slow Down!"
+                2 -> "Emergency Vehicle Approach From Right"
+                3 -> "Emergency Vehicle Approach From Left"
+                else -> ""
+            }
+        }
+        else -> ""
+    }
+    fun mapToWarningIcon(index: Int, type: TYPE) = when(type) {
+        TYPE.EBW -> {
+            when(index) {
+                1 -> R.drawable.v2x_ic_warning
+                else -> 0
+            }
+        }
+        TYPE.EVW -> {
+            when(index) {
+                1 -> R.drawable.v2x_img_pop_center
+                2 -> R.drawable.v2x_img_pop_right
+                3 -> R.drawable.v2x_img_pop_left
+                else -> 0
+            }
+        }
+        else -> 0
     }
     fun mapToRange(range: Int) = when(range) {
         in 0..69 -> R.drawable.v2x_img_level_warning_01
         in 70..210 -> R.drawable.v2x_img_level_warning_02
         in 210..255 -> R.drawable.v2x_img_level_warning_03
         else -> R.drawable.v2x_img_level_straight
+    }
+    fun mapToDistance(range: Int) = when(range) {
+        in 0..69 -> range.toString() + "m"
+        in 70..97 -> (((range-70) * 5) + 70).toString() + "m"
+        in 98..254 -> (((range-98) * 10) + 210).toString() + "m"
+        else -> "Out of range"
     }
     fun mapToWarningType(type: TYPE) = when(type) {
         TYPE.NONE -> V2XTYPE.NONE

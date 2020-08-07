@@ -68,7 +68,9 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     private val _id_light_brake = MutableLiveData<Int>()
     private val _warning_type = MutableLiveData<V2XTYPE>()
     private val _warning_pused = MutableLiveData<V2XPUSHED>()
+    private val _warning_distance = MutableLiveData<String>()
     private val _warning_text = MutableLiveData<String>()
+    private val _id_warning_icon = MutableLiveData<Int>()
 
     val warning_type : LiveData<V2XTYPE>
         get() = _warning_type
@@ -76,6 +78,10 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         get() = _warning_pused
     val warning_text : LiveData<String>
         get() = _warning_text
+    val id_warning_icon : LiveData<Int>
+        get() = _id_warning_icon
+    val warning_distance : LiveData<String>
+        get() = _warning_distance
     val id_range : LiveData<Int>
         get() = _id_range
     val id_v2x_status_g : LiveData<Int>
@@ -146,14 +152,18 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     private fun updateInform(data: V2XWarnInform) {
         _inform.postValue(data.toString())
         _id_range.postValue(ResourceMapper().mapToRange(data.range))
-        _warning_text.postValue(ResourceMapper().mapToWarningText(data.text_id))
+        _warning_distance.postValue(ResourceMapper().mapToDistance(data.range))
+        _warning_text.postValue(ResourceMapper().mapToWarningText(data.text_id, data.type))
+        _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id, data.type))
         _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
         _warning_pused.postValue(ResourceMapper().mapToWarningPushed(data.pushed))
     }
     private fun updateWarning(data: V2XWarnInform) {
         _warning.postValue(data.toString())
         _id_range.postValue(ResourceMapper().mapToRange(data.range))
-        _warning_text.postValue(ResourceMapper().mapToWarningText(data.text_id))
+        _warning_distance.postValue(ResourceMapper().mapToDistance(data.range))
+        _warning_text.postValue(ResourceMapper().mapToWarningText(data.text_id, data.type))
+        _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id, data.type))
         _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
         _warning_pused.postValue(ResourceMapper().mapToWarningPushed(data.pushed))
     }

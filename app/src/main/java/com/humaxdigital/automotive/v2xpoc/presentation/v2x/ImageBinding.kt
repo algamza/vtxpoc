@@ -4,6 +4,11 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
+@BindingAdapter("id_warning_icon")
+fun idWarningIcon(view: ImageView, res:Int) {
+    Glide.with(view.context).load(res).into(view)
+}
+
 @BindingAdapter("id_range")
 fun idRange(view: ImageView, res:Int) {
     Glide.with(view.context).load(res).into(view)
