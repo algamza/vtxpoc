@@ -15,5 +15,5 @@ V2X (Vehicle-to-everything, V2X communication) Poc project implemented using Cle
 
 ### Reference
 
-1. [medium](https://proandroiddev.com/kotlin-clean-architecture-1ad42fcd97fa) - Kotlin Clean Architecture
-2. [GitHub](https://medium.com/@elizarov/cold-flows-hot-channels-d74769805f9) - Coroutines Flow & Channel
+1. [Medium](https://proandroiddev.com/kotlin-clean-architecture-1ad42fcd97fa) - Kotlin Clean Architecture
+2. [Medium](https://medium.com/@elizarov/cold-flows-hot-channels-d74769805f9) - Coroutines Flow & Channel
