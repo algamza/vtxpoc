@@ -12,8 +12,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 
-class MainViewModel(private val context: Context, private val getCarUseCase: GetCarUseCase, private val tts: TextToSpeech) : ViewModel() {
+class MainViewModel(private val context: Context, private val getCarUseCase: GetCarUseCase, public val tts: TextToSpeech) : ViewModel() {
     private val TAG = this.javaClass.name
 
     // test livedata
@@ -69,6 +70,7 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     private val _warning_distance = MutableLiveData<String>()
     private val _warning_text = MutableLiveData<String>()
     private val _id_warning_icon = MutableLiveData<Int>()
+    private val _warning_audio = MutableLiveData<String>()
 
     val warning_type : LiveData<V2XTYPE>
         get() = _warning_type
@@ -78,6 +80,8 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         get() = _warning_text
     val id_warning_icon : LiveData<Int>
         get() = _id_warning_icon
+    val warning_audio : LiveData<String>
+        get() = _warning_audio
     val warning_distance : LiveData<String>
         get() = _warning_distance
     val id_range : LiveData<Int>
@@ -110,6 +114,7 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         get() = _id_light_brake
 
     init {
+        tts.setLanguage(Locale.CHINESE)
         fetchCar()
         registCallback()
     }
@@ -149,21 +154,25 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     }
     private fun updateInform(data: V2XWarnInform) {
         _inform.postValue(data.toString())
+        _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
+        _warning_pused.postValue(ResourceMapper().mapToWarningPushed(data.pushed))
         _id_range.postValue(ResourceMapper().mapToRange(data.range))
         _warning_distance.postValue(ResourceMapper().mapToDistance(data.range))
         _warning_text.postValue(ResourceMapper().mapToWarningText(data.text_id, data.type))
+        _warning_audio.postValue(ResourceMapper().mapToWarningAudio(data.text_id, data.type))
         _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id, data.type))
-        _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
-        _warning_pused.postValue(ResourceMapper().mapToWarningPushed(data.pushed))
+
     }
     private fun updateWarning(data: V2XWarnInform) {
         _warning.postValue(data.toString())
+        _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
+        _warning_pused.postValue(ResourceMapper().mapToWarningPushed(data.pushed))
         _id_range.postValue(ResourceMapper().mapToRange(data.range))
         _warning_distance.postValue(ResourceMapper().mapToDistance(data.range))
         _warning_text.postValue(ResourceMapper().mapToWarningText(data.text_id, data.type))
+        _warning_audio.postValue(ResourceMapper().mapToWarningAudio(data.text_id, data.type))
         _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id, data.type))
-        _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
-        _warning_pused.postValue(ResourceMapper().mapToWarningPushed(data.pushed))
+
     }
     private fun updateVehicleStatus(data: V2XVehicleStatus) {
         _vehicle.postValue(data.toString())

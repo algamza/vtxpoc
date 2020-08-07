@@ -80,9 +80,9 @@ class ResourceMapper constructor() {
         }
         TYPE.EVW -> {
             when(index) {
-                1 -> "Emergency Vehicle Approach Slow Down!"
-                2 -> "Emergency Vehicle Approach From Right"
-                3 -> "Emergency Vehicle Approach From Left"
+                1 -> "Emergency Vehicle Approach. Slow Down!"
+                2 -> "Emergency Vehicle Approach. From Right"
+                3 -> "Emergency Vehicle Approach. From Left"
                 else -> ""
             }
         }
