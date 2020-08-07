@@ -1,6 +1,5 @@
-package com.humaxdigital.automotive.v2xpoc.presentation.v2x
+package com.humaxdigital.automotive.v2xpoc.presentation.test
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

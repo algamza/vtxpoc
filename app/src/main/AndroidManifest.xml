@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.v2x.TestActivity"
+            android:name=".presentation.test.TestActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <service android:name=".presentation.services.TestService" />

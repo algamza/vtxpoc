@@ -26,5 +26,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
     </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragment_log"
+        android:layout_width="1400px"
+        android:layout_height="630px"
+        android:layout_marginLeft="520px" />
 </FrameLayout>
 

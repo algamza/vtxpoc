@@ -2,8 +2,6 @@ package com.humaxdigital.automotive.v2xpoc.presentation.v2x
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
-import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

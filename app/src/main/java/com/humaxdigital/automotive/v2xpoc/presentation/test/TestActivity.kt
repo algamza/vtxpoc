@@ -1,4 +1,4 @@
-package com.humaxdigital.automotive.v2xpoc.presentation.v2x
+package com.humaxdigital.automotive.v2xpoc.presentation.test
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

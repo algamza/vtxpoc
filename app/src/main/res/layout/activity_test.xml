@@ -5,7 +5,7 @@
     <data>
         <variable
             name="test"
-            type="com.humaxdigital.automotive.v2xpoc.presentation.v2x.TestViewModel" />
+            type="com.humaxdigital.automotive.v2xpoc.presentation.test.TestViewModel" />
     </data>
 
     <LinearLayout
@@ -13,7 +13,7 @@
         android:layout_height="630px"
         android:orientation="vertical"
         android:weightSum="10"
-        tools:context=".presentation.v2x.TestActivity">
+        tools:context=".presentation.test.TestActivity">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height= "0dp"

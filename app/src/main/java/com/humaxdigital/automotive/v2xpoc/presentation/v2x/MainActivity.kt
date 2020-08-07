@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XPUSHED
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XTYPE
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
     private val TAG = this.javaClass.name
     private val vm: MainViewModel by viewModel()
     private var test : Int = 0
+    private val flog = LogFragment()
+    private var is_show = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +25,22 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction().add(R.id.fragment_main, MainFragment()).commit()
         supportFragmentManager.beginTransaction().add(R.id.fragment_side, SideFragment()).commit()
+
+        // test
+        supportFragmentManager.beginTransaction().add(R.id.fragment_log, flog).commit()
+        fragment_log.setOnLongClickListener {
+            when(is_show) {
+                true -> {
+                    supportFragmentManager.beginTransaction().hide(flog).commit()
+                    is_show = false
+                }
+                false -> {
+                    supportFragmentManager.beginTransaction().show(flog).commit()
+                    is_show = true
+                }
+            }
+            true
+        }
 
         vm.warning_pused.observe(this, Observer {
             try {
