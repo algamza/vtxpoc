@@ -25,43 +25,43 @@ class LogFragment : Fragment() {
     ): View? {
         vm.warning.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         vm.inform.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         vm.vehicle.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         vm.spat.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         vm.hv_pos.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         vm.hv_motion.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         vm.rv1.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         vm.rv2.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         vm.rv3.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         vm.rv4.observe(this, Observer {
             text_log.append(it+"\n")
-            log_scroll.fullScroll(View.FOCUS_DOWN)
+            //log_scroll.fullScroll(View.FOCUS_DOWN)
         })
         return inflater.inflate(R.layout.fragment_log, null)
     }
