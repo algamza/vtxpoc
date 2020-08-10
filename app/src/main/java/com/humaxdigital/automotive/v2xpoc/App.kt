@@ -8,6 +8,7 @@ import com.humaxdigital.automotive.v2xpoc.di.mViewModels
 import org.koin.android.ext.android.startKoin
 
 class App : Application() {
+    public companion object var startcount = 0
     override fun onCreate() {
         super.onCreate()
         loadKoin()

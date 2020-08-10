@@ -23,17 +23,46 @@ class LogFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        vm.warning.observe(this, Observer { text_log.append(it+"\n") })
-        vm.inform.observe(this, Observer { text_log.append(it+"\n") })
-        vm.vehicle.observe(this, Observer { text_log.append(it+"\n") })
-        vm.spat.observe(this, Observer { text_log.append(it+"\n") })
-        vm.hv_pos.observe(this, Observer { text_log.append(it+"\n") })
-        vm.hv_motion.observe(this, Observer { text_log.append(it+"\n") })
-        vm.rv1.observe(this, Observer { text_log.append(it+"\n") })
-        vm.rv2.observe(this, Observer { text_log.append(it+"\n") })
-        vm.rv3.observe(this, Observer { text_log.append(it+"\n") })
-        vm.rv4.observe(this, Observer { text_log.append(it+"\n") })
-
+        vm.warning.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
+        vm.inform.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
+        vm.vehicle.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
+        vm.spat.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
+        vm.hv_pos.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
+        vm.hv_motion.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
+        vm.rv1.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
+        vm.rv2.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
+        vm.rv3.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
+        vm.rv4.observe(this, Observer {
+            text_log.append(it+"\n")
+            log_scroll.fullScroll(View.FOCUS_DOWN)
+        })
         return inflater.inflate(R.layout.fragment_log, null)
     }
 }
