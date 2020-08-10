@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.humaxdigital.automotive.v2xpoc">
+    package="com.humaxdigital.automotive.v2xpoc"
+    android:sharedUserId="android.uid.system">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.USB_PERMISSION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.car.permission.CAR_VENDOR_EXTENSION" />
     <uses-permission android:name="android.car.permission.CAR_POWERTRAIN" />
 
@@ -21,6 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- For Test (Begin) -->
         <activity
             android:name=".presentation.test.TestActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -36,6 +43,28 @@
                 android:name="com.humaxdigital.metadata.GLOBAL_KEYS"
                 android:resource="@xml/global_keys" />
         </receiver>
+        <receiver
+            android:name=".presentation.test.HiddenBroadcastReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <data android:scheme="file"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".presentation.test.PackageUpdateService"
+            android:exported="false"></service>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.humaxdigital.automotive.v2xpoc.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!-- For Test (end) -->
     </application>
 
 </manifest>
