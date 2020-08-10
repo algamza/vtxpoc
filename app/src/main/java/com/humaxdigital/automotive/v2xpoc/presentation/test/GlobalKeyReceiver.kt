@@ -20,6 +20,7 @@ class GlobalKeyReceiver : BroadcastReceiver() {
                 if ( app.startcount++ < 10 ) return
                 p0!!.startActivity(Intent(p0!!, MainActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                app.startcount = 0
             }
             else -> app.startcount = 0
         }
