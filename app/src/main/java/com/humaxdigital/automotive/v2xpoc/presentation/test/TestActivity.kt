@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.databinding.ActivityTestBinding
 import kotlinx.android.synthetic.main.activity_test.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TestActivity : AppCompatActivity() {
 

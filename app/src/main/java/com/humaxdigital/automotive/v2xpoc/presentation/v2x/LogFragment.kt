@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.humaxdigital.automotive.v2xpoc.R
 import kotlinx.android.synthetic.main.fragment_log.*
 import kotlinx.android.synthetic.main.fragment_log.view.*
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LogFragment : Fragment() {
     private val TAG = this.javaClass.name
