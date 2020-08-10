@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         // test
         supportFragmentManager.beginTransaction().add(R.id.fragment_log, flog).commit()
-        fragment_log.setOnLongClickListener {
+        fragment_log.setOnClickListener() {
             when(is_show) {
                 true -> {
                     supportFragmentManager.beginTransaction().hide(flog).commit()
@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
                     is_show = true
                 }
             }
-            true
         }
 
         vm.warning_pused.observe(this, Observer {
