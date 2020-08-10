@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.databinding.FragmentSideBinding
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SideFragment : Fragment() {
     private val TAG = this.javaClass.name

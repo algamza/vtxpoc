@@ -12,7 +12,7 @@ import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.databinding.FragmentEbwBinding
 import com.humaxdigital.automotive.v2xpoc.databinding.FragmentEvwBinding
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XPUSHED
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class EVWFragment : Fragment() {
     private val TAG = this.javaClass.name
@@ -33,7 +33,10 @@ class EVWFragment : Fragment() {
         bind.setLifecycleOwner(activity)
         vm.warning_audio.observe(this, Observer {
             when(vm.warning_pused.value) {
-                V2XPUSHED.ADD -> vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)
+                V2XPUSHED.ADD -> {
+                    vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)
+                }
+                else -> {}
             }
         })
         return bind.root

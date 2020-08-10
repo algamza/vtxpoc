@@ -1,11 +1,13 @@
 package com.humaxdigital.automotive.v2xpoc
 
 import android.app.Application
-import com.humaxdigital.automotive.v2xpoc.di.mAndroidModule
-import com.humaxdigital.automotive.v2xpoc.di.mRepositoryModules
-import com.humaxdigital.automotive.v2xpoc.di.mUseCaseModules
-import com.humaxdigital.automotive.v2xpoc.di.mViewModels
-import org.koin.android.ext.android.startKoin
+import android.content.Intent
+import android.os.Build
+import com.humaxdigital.automotive.v2xpoc.di.*
+import com.humaxdigital.automotive.v2xpoc.presentation.services.MainService
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.fragment.koin.fragmentFactory
+import org.koin.core.context.startKoin
 
 class App : Application() {
     public var startcount = 0
@@ -14,16 +16,19 @@ class App : Application() {
         loadKoin()
 /*
         if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ) {
-            startForegroundService(Intent(this, TestService::class.java))
+            startForegroundService(Intent(this, MainService::class.java))
         } else {
-            startService(Intent(this, TestService::class.java))
+            startService(Intent(this, MainService::class.java))
         }
-*/
+
+ */
     }
 
     private fun loadKoin() {
-        startKoin(this,
-            listOf(mAndroidModule, mRepositoryModules, mUseCaseModules, mViewModels)
-        )
+        startKoin {
+            androidContext(this@App)
+            fragmentFactory()
+            modules(listOf(mAndroidModule, mRepositoryModules, mUseCaseModules, mViewModels, mAppModules))
+        }
     }
 }

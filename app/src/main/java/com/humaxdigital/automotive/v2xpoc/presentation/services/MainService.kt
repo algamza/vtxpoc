@@ -5,11 +5,10 @@ import android.content.Intent
 import android.os.IBinder
 import com.humaxdigital.automotive.v2xpoc.domain.usecases.GetCarUseCase
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class TestService : Service() {
+class MainService : Service() {
 
     val getCarUseCase : GetCarUseCase by inject()
 

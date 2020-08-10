@@ -11,15 +11,16 @@ import com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainActivity
 
 class GlobalKeyReceiver : BroadcastReceiver() {
 
-    override fun onReceive(p0: Context?, p1: Intent?) {
-        var app = p0!!.applicationContext as App
-        if ( !p1!!.action.equals("android.intent.action.GLOBAL_BUTTON") ) return
-        val event = p1!!.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)
+    override fun onReceive(p0: Context, p1: Intent) {
+        var app = p0.applicationContext as App
+        if ( !p1.action.equals("android.intent.action.GLOBAL_BUTTON") ) return
+        val event = p1.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)
         when(event.keyCode) {
             KeyEvent.KEYCODE_ENDCALL -> {
                 if ( app.startcount++ < 10 ) return
-                p0!!.startActivity(Intent(p0!!, MainActivity::class.java)
+                p0.startActivity(Intent(p0, MainActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                app.startcount = 0
             }
             else -> app.startcount = 0
         }

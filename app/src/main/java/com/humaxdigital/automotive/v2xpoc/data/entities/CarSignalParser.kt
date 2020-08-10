@@ -1,8 +1,5 @@
 package com.humaxdigital.automotive.v2xpoc.data.entities
 
-import android.util.Log
-import java.nio.ByteBuffer
-
 class CarSignalParser constructor() {
     fun parseAsWarnInform(data: ByteArray) : WarnInform {
         var type = data[0]
@@ -29,6 +26,7 @@ class CarSignalParser constructor() {
             lt_end.toUByte().toInt(), rt_phase.toUByte().toInt(), rt_end.toUByte().toInt())
     }
 
+    @kotlin.ExperimentalUnsignedTypes
     fun parseAsVehicleStatus(data: ByteArray) : VehicleStatus {
         var status = data[0]
         var speed = data[1]

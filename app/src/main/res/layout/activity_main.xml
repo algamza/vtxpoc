@@ -28,8 +28,7 @@
     </LinearLayout>
     <FrameLayout
         android:id="@+id/fragment_log"
-        android:layout_width="1400px"
-        android:layout_height="630px"
-        android:layout_marginLeft="520px" />
+        android:layout_width="1920px"
+        android:layout_height="630px" />
 </FrameLayout>
 

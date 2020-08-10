@@ -3,39 +3,46 @@ package com.humaxdigital.automotive.v2xpoc.presentation.v2x
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XPUSHED
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XTYPE
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import kotlinx.android.synthetic.main.fragment_log.*
+import org.koin.android.ext.android.get
+import org.koin.androidx.fragment.android.setupKoinFragmentFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private val TAG = this.javaClass.name
     private val vm: MainViewModel by viewModel()
-    private var test : Int = 0
-    private val flog = LogFragment()
     private var is_show = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setupKoinFragmentFactory()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportFragmentManager.beginTransaction().add(R.id.fragment_main, MainFragment()).commit()
-        supportFragmentManager.beginTransaction().add(R.id.fragment_side, SideFragment()).commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_main, MainFragment::class.java, null, null).commit()
+        supportFragmentManager
+            .beginTransaction().add(R.id.fragment_side, SideFragment::class.java, null, null).commit()
 
         // test
-        supportFragmentManager.beginTransaction().add(R.id.fragment_log, flog).commit()
-        fragment_log.setOnLongClickListener {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_log, LogFragment::class.java, null, null).commit()
+
+        fragment_log.setOnLongClickListener() {
             when(is_show) {
                 true -> {
-                    supportFragmentManager.beginTransaction().hide(flog).commit()
+                    text_log.visibility = View.GONE
                     is_show = false
                 }
                 false -> {
-                    supportFragmentManager.beginTransaction().show(flog).commit()
+                    text_log.visibility = View.VISIBLE
                     is_show = true
                 }
             }
@@ -48,17 +55,18 @@ class MainActivity : AppCompatActivity() {
                     V2XPUSHED.ADD -> {
                         supportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.fragment_main, mapToFragment(vm.warning_type.value!!) as Fragment)
+                            .replace(R.id.fragment_main, mapToFragment(vm.warning_type.value!!), null, null)
                             .commit()
                     }
                     V2XPUSHED.DELETE -> {
                         supportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.fragment_main, MainFragment())
+                            .replace(R.id.fragment_main, MainFragment::class.java, null, null)
                             .commit()
                     }
                     V2XPUSHED.UPDATE -> {}
                     V2XPUSHED.NONE -> {}
+                    else -> {}
                 }
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
@@ -67,8 +75,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun mapToFragment(type: V2XTYPE) = when(type) {
-        V2XTYPE.EBW -> EBWFragment()
-        V2XTYPE.EVW -> EVWFragment()
+        V2XTYPE.EBW -> EBWFragment::class.java
+        V2XTYPE.EVW -> EVWFragment::class.java
+        /*
         V2XTYPE.NONE -> {}
         V2XTYPE.HB -> {}
         V2XTYPE.FCW -> {}
@@ -85,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         V2XTYPE.GLOSA -> {}
         V2XTYPE.IVS  -> {}
         V2XTYPE.TJW -> {}
-        else -> MainFragment()
+         */
+        else -> MainFragment::class.java
     }
 }
