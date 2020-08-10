@@ -74,7 +74,7 @@ class ResourceMapper constructor() {
     fun mapToWarningAudio(index: Int, type: TYPE) = when(type) {
         TYPE.EBW -> {
             when(index) {
-                1 -> "Emergency Brake Warning!"
+                1 -> "beep"
                 else -> ""
             }
         }

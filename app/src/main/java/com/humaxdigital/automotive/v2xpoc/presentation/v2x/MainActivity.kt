@@ -15,7 +15,6 @@ import java.lang.Exception
 class MainActivity : AppCompatActivity() {
     private val TAG = this.javaClass.name
     private val vm: MainViewModel by viewModel()
-    private var test : Int = 0
     private val flog = LogFragment()
     private var is_show = true
 

@@ -33,7 +33,9 @@ class EVWFragment : Fragment() {
         bind.setLifecycleOwner(activity)
         vm.warning_audio.observe(this, Observer {
             when(vm.warning_pused.value) {
-                V2XPUSHED.ADD -> vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)
+                V2XPUSHED.ADD -> {
+                    vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)
+                }
             }
         })
         return bind.root
