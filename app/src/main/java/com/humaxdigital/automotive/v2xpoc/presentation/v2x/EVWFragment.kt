@@ -36,6 +36,7 @@ class EVWFragment : Fragment() {
                 V2XPUSHED.ADD -> {
                     vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)
                 }
+                else -> {}
             }
         })
         return bind.root

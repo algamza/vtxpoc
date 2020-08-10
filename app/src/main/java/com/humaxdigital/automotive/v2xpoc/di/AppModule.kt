@@ -5,6 +5,7 @@ import com.humaxdigital.automotive.v2xpoc.data.car.CarApi
 import com.humaxdigital.automotive.v2xpoc.data.repository.CarRepositoryImpl
 import com.humaxdigital.automotive.v2xpoc.domain.repositories.CarRepository
 import com.humaxdigital.automotive.v2xpoc.domain.usecases.GetCarUseCase
+import com.humaxdigital.automotive.v2xpoc.presentation.services.MainService
 import com.humaxdigital.automotive.v2xpoc.presentation.test.TestViewModel
 import com.humaxdigital.automotive.v2xpoc.presentation.v2x.*
 import org.koin.android.ext.koin.androidContext
@@ -32,6 +33,7 @@ val mViewModels = module {
 }
 
 val mAppModules = module {
+    single { MainService() }
     fragment { MainFragment() }
     fragment { SideFragment() }
     fragment { EBWFragment() }

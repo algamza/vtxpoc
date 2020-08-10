@@ -45,6 +45,7 @@ class EBWFragment : Fragment() {
                     }
                     else vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)
                 }
+                else -> {}
             }
         })
         return bind.root

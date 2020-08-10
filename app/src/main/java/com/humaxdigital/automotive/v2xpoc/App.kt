@@ -1,7 +1,10 @@
 package com.humaxdigital.automotive.v2xpoc
 
 import android.app.Application
+import android.content.Intent
+import android.os.Build
 import com.humaxdigital.automotive.v2xpoc.di.*
+import com.humaxdigital.automotive.v2xpoc.presentation.services.MainService
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
@@ -13,11 +16,12 @@ class App : Application() {
         loadKoin()
 /*
         if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ) {
-            startForegroundService(Intent(this, TestService::class.java))
+            startForegroundService(Intent(this, MainService::class.java))
         } else {
-            startService(Intent(this, TestService::class.java))
+            startService(Intent(this, MainService::class.java))
         }
-*/
+
+ */
     }
 
     private fun loadKoin() {

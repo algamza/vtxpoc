@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.fragment_log, LogFragment::class.java, null, null).commit()
 
         fragment_log.setOnLongClickListener() {
-            val log : LogFragment = get()
             when(is_show) {
                 true -> {
                     text_log.visibility = View.GONE
@@ -56,8 +55,7 @@ class MainActivity : AppCompatActivity() {
                     V2XPUSHED.ADD -> {
                         supportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.fragment_main, mapToFragment(vm.warning_type.value!!)
-                                    as Class<out Fragment>, null, null)
+                            .replace(R.id.fragment_main, mapToFragment(vm.warning_type.value!!), null, null)
                             .commit()
                     }
                     V2XPUSHED.DELETE -> {
@@ -68,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     V2XPUSHED.UPDATE -> {}
                     V2XPUSHED.NONE -> {}
+                    else -> {}
                 }
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
@@ -78,6 +77,7 @@ class MainActivity : AppCompatActivity() {
     private fun mapToFragment(type: V2XTYPE) = when(type) {
         V2XTYPE.EBW -> EBWFragment::class.java
         V2XTYPE.EVW -> EVWFragment::class.java
+        /*
         V2XTYPE.NONE -> {}
         V2XTYPE.HB -> {}
         V2XTYPE.FCW -> {}
@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         V2XTYPE.GLOSA -> {}
         V2XTYPE.IVS  -> {}
         V2XTYPE.TJW -> {}
+         */
         else -> MainFragment::class.java
     }
 }

@@ -46,7 +46,6 @@ class CarApi(car: CarEx) {
     private var callback_rv3 : ((RSUStatus) -> Unit)? = null
     private var callback_rv4 : ((RSUStatus) -> Unit)? = null
 
-
     private val _car = car
 
     init {
@@ -54,19 +53,19 @@ class CarApi(car: CarEx) {
             while (!_car.isConnected) {}
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var callback = object : CarPropertyManager.CarPropertyEventListener {
-                override fun onChangeEvent(p0: CarPropertyValue<*>?) {
+                override fun onChangeEvent(p0: CarPropertyValue<*>) {
                     try {
-                        when(p0!!.areaId) {
-                            ID_AREA_V2X_WARNING -> { callback_warning!!(CarSignalParser().parseAsWarnInform(p0!!.value as ByteArray)) }
-                            ID_AREA_V2X_INFORM -> { callback_inform!!(CarSignalParser().parseAsWarnInform(p0!!.value as ByteArray)) }
-                            ID_AREA_V2X_VEHICLE_STATUS -> { callback_vehicle!!(CarSignalParser().parseAsVehicleStatus(p0!!.value as ByteArray)) }
-                            ID_AREA_V2X_SPAT -> { callback_spat!!(CarSignalParser().parseAsSPaT(p0!!.value as ByteArray)) }
-                            ID_AREA_V2X_HV_POS -> { callback_hvpos!!(CarSignalParser().parseAsHVPos(p0!!.value as ByteArray)) }
-                            ID_AREA_V2X_HV_MOTION -> { callback_hvmotion!!(CarSignalParser().parseAsHVMotion(p0!!.value as ByteArray)) }
-                            ID_AREA_V2X_RV1_STATUS -> { callback_rv1!!(CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)) }
-                            ID_AREA_V2X_RV2_STATUS -> { callback_rv2!!(CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)) }
-                            ID_AREA_V2X_RV3_STATUS -> { callback_rv3!!(CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)) }
-                            ID_AREA_V2X_RV4_STATUS -> { callback_rv4!!(CarSignalParser().parseAsRSUStatus(p0!!.value as ByteArray)) }
+                        when(p0.areaId) {
+                            ID_AREA_V2X_WARNING -> { callback_warning!!(CarSignalParser().parseAsWarnInform(p0.value as ByteArray)) }
+                            ID_AREA_V2X_INFORM -> { callback_inform!!(CarSignalParser().parseAsWarnInform(p0.value as ByteArray)) }
+                            ID_AREA_V2X_VEHICLE_STATUS -> { callback_vehicle!!(CarSignalParser().parseAsVehicleStatus(p0.value as ByteArray)) }
+                            ID_AREA_V2X_SPAT -> { callback_spat!!(CarSignalParser().parseAsSPaT(p0.value as ByteArray)) }
+                            ID_AREA_V2X_HV_POS -> { callback_hvpos!!(CarSignalParser().parseAsHVPos(p0.value as ByteArray)) }
+                            ID_AREA_V2X_HV_MOTION -> { callback_hvmotion!!(CarSignalParser().parseAsHVMotion(p0.value as ByteArray)) }
+                            ID_AREA_V2X_RV1_STATUS -> { callback_rv1!!(CarSignalParser().parseAsRSUStatus(p0.value as ByteArray)) }
+                            ID_AREA_V2X_RV2_STATUS -> { callback_rv2!!(CarSignalParser().parseAsRSUStatus(p0.value as ByteArray)) }
+                            ID_AREA_V2X_RV3_STATUS -> { callback_rv3!!(CarSignalParser().parseAsRSUStatus(p0.value as ByteArray)) }
+                            ID_AREA_V2X_RV4_STATUS -> { callback_rv4!!(CarSignalParser().parseAsRSUStatus(p0.value as ByteArray)) }
                         }
                     } catch (e:Exception) {
                         Log.e(TAG, e.toString())
@@ -210,52 +209,61 @@ class CarApi(car: CarEx) {
         }
     }
 
-
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackWarning() = callbackFlow<WarnInform> {
         setWarningCallback { sendBlocking(it) }
         awaitClose { }
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackInform() = callbackFlow<WarnInform> {
         setInformCallback { sendBlocking(it) }
         awaitClose { }
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackVehicleStatus() = callbackFlow<VehicleStatus> {
         setVehicleCallback { sendBlocking(it) }
         awaitClose { }
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackSPaT() = callbackFlow<SPaT> {
         setSPaTCallback { sendBlocking(it) }
         awaitClose { }
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackHVPos() = callbackFlow<HVPos> {
         setHVPosCallback { sendBlocking(it) }
         awaitClose { }
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackHVMotion() = callbackFlow<HVMotion> {
         setHVMotionCallback { sendBlocking(it) }
         awaitClose { }
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackRV1Status() = callbackFlow<RSUStatus> {
         setRV1Callback { sendBlocking(it) }
         awaitClose { }
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackRV2Status() = callbackFlow<RSUStatus> {
         setRV2Callback { sendBlocking(it) }
         awaitClose { }
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackRV3Status() = callbackFlow<RSUStatus> {
         setRV3Callback { sendBlocking(it) }
         awaitClose { }
     }
 
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
     fun callbackRV4Status() = callbackFlow<RSUStatus> {
         setRV4Callback { sendBlocking(it) }
         awaitClose { }
