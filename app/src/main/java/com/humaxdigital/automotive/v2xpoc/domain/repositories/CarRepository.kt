@@ -14,6 +14,10 @@ interface CarRepository {
     fun getRV2Status() : Flow<V2XRSUStatus>
     fun getRV3Status() : Flow<V2XRSUStatus>
     fun getRV4Status() : Flow<V2XRSUStatus>
+    fun getTrackingObj1() : Flow<V2XTrackingObj>
+    fun getTrackingObj2() : Flow<V2XTrackingObj>
+    fun getTrackingObj3() : Flow<V2XTrackingObj>
+    fun getWow() : Flow<V2XWow>
 
     fun callbackWarning() : Flow<V2XWarnInform>
     fun callbackInform() : Flow<V2XWarnInform>
@@ -25,4 +29,8 @@ interface CarRepository {
     fun callbackRV2Status() : Flow<V2XRSUStatus>
     fun callbackRV3Status() : Flow<V2XRSUStatus>
     fun callbackRV4Status() : Flow<V2XRSUStatus>
+    fun callbackTrackingObj1() : Flow<V2XTrackingObj>
+    fun callbackTrackingObj2() : Flow<V2XTrackingObj>
+    fun callbackTrackingObj3() : Flow<V2XTrackingObj>
+    fun callbackWow() : Flow<V2XWow>
 }

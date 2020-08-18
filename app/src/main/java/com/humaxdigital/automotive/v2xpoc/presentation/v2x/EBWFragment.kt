@@ -2,9 +2,6 @@ package com.humaxdigital.automotive.v2xpoc.presentation.v2x
 
 import android.content.Context
 import android.media.AudioManager
-import android.media.MediaPlayer
-import android.media.SoundPool
-import android.media.ToneGenerator
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater

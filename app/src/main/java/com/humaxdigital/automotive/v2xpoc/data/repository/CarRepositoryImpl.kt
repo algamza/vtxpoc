@@ -48,6 +48,22 @@ class CarRepositoryImpl constructor(private val api : CarApi) : CarRepository {
         return api.getRV4Status().map { CarSignalMapper().mapToEntity(it) }
     }
 
+    override fun getTrackingObj1(): Flow<V2XTrackingObj> {
+        return api.getTrackingObj1().map { CarSignalMapper().mapToEntity(it) }
+    }
+
+    override fun getTrackingObj2(): Flow<V2XTrackingObj> {
+        return api.getTrackingObj2().map { CarSignalMapper().mapToEntity(it) }
+    }
+
+    override fun getTrackingObj3(): Flow<V2XTrackingObj> {
+        return api.getTrackingObj3().map { CarSignalMapper().mapToEntity(it) }
+    }
+
+    override fun getWow(): Flow<V2XWow> {
+        return api.getExt().map { CarSignalMapper().mapToEntity(it) }
+    }
+
     @kotlinx.coroutines.ExperimentalCoroutinesApi
     override fun callbackWarning(): Flow<V2XWarnInform> {
         return api.callbackWarning().map { CarSignalMapper().mapToEntity(it) }
@@ -96,5 +112,25 @@ class CarRepositoryImpl constructor(private val api : CarApi) : CarRepository {
     @kotlinx.coroutines.ExperimentalCoroutinesApi
     override fun callbackRV4Status(): Flow<V2XRSUStatus> {
         return api.callbackRV4Status().map { CarSignalMapper().mapToEntity(it) }
+    }
+
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
+    override fun callbackTrackingObj1(): Flow<V2XTrackingObj> {
+        return api.callbackTrackingObj1().map { CarSignalMapper().mapToEntity(it) }
+    }
+
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
+    override fun callbackTrackingObj2(): Flow<V2XTrackingObj> {
+        return api.callbackTrackingObj2().map { CarSignalMapper().mapToEntity(it) }
+    }
+
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
+    override fun callbackTrackingObj3(): Flow<V2XTrackingObj> {
+        return api.callbackTrackingObj3().map { CarSignalMapper().mapToEntity(it) }
+    }
+
+    @kotlinx.coroutines.ExperimentalCoroutinesApi
+    override fun callbackWow(): Flow<V2XWow> {
+        return api.callbackExt().map { CarSignalMapper().mapToEntity(it) }
     }
 }

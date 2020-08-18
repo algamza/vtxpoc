@@ -46,6 +46,22 @@ class GetCarUseCase(private val repositories: CarRepository) {
         return repositories.getRV4Status()
     }
 
+    fun getTrackingObj1(): Flow<V2XTrackingObj> {
+        return repositories.getTrackingObj1()
+    }
+
+    fun getTrackingObj2(): Flow<V2XTrackingObj> {
+        return repositories.getTrackingObj2()
+    }
+
+    fun getTrackingObj3(): Flow<V2XTrackingObj> {
+        return repositories.getTrackingObj3()
+    }
+
+    fun getWow(): Flow<V2XWow> {
+        return repositories.getWow()
+    }
+
     fun callbackWarning(): Flow<V2XWarnInform> {
         return repositories.callbackWarning()
     }
@@ -84,5 +100,21 @@ class GetCarUseCase(private val repositories: CarRepository) {
 
     fun callbackRV4Status(): Flow<V2XRSUStatus> {
         return repositories.callbackRV4Status()
+    }
+
+    fun callbackTrackingObj1(): Flow<V2XTrackingObj> {
+        return repositories.callbackTrackingObj1()
+    }
+
+    fun callbackTrackingObj2(): Flow<V2XTrackingObj> {
+        return repositories.callbackTrackingObj2()
+    }
+
+    fun callbackTrackingObj3(): Flow<V2XTrackingObj> {
+        return repositories.callbackTrackingObj3()
+    }
+
+    fun callbackWow(): Flow<V2XWow> {
+        return repositories.callbackWow()
     }
 }

@@ -28,6 +28,10 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     private val _rv2 = MutableLiveData<String>()
     private val _rv3 = MutableLiveData<String>()
     private val _rv4 = MutableLiveData<String>()
+    private val _track_obj1 = MutableLiveData<String>()
+    private val _track_obj2 = MutableLiveData<String>()
+    private val _track_obj3 = MutableLiveData<String>()
+    private val _wow = MutableLiveData<String>()
 
     val warning : LiveData<String>
         get() = _warning
@@ -49,6 +53,14 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         get() = _rv3
     val rv4 : LiveData<String>
         get() = _rv4
+    val track_obj1 : LiveData<String>
+        get() = _track_obj1
+    val track_obj2 : LiveData<String>
+        get() = _track_obj2
+    val track_obj3 : LiveData<String>
+        get() = _track_obj3
+    val wow : LiveData<String>
+        get() = _wow
 
     // resource livedata
     private val _id_range = MutableLiveData<Int>()
@@ -131,6 +143,10 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
             getCarUseCase.getRV2Status().collect { it -> updateRV2Status(it) }
             getCarUseCase.getRV3Status().collect { it -> updateRV3Status(it) }
             getCarUseCase.getRV4Status().collect { it -> updateRV4Status(it) }
+            getCarUseCase.getTrackingObj1().collect { it -> updateTrackingObj1(it) }
+            getCarUseCase.getTrackingObj2().collect { it -> updateTrackingObj2(it) }
+            getCarUseCase.getTrackingObj3().collect { it -> updateTrackingObj3(it) }
+            getCarUseCase.getWow().collect { it -> updateWow(it) }
         }
     }
 
@@ -146,6 +162,10 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
             async { callbackRV2() }
             async { callbackRV3() }
             async { callbackRV4() }
+            async { callbackTrackingObj1() }
+            async { callbackTrackingObj2() }
+            async { callbackTrackingObj3() }
+            async { callbackWow() }
         }
     }
 
@@ -154,6 +174,7 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     }
     private fun updateInform(data: V2XWarnInform) {
         _inform.postValue(data.toString())
+
         _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
         _warning_pused.postValue(ResourceMapper().mapToWarningPushed(data.pushed))
         _id_range.postValue(ResourceMapper().mapToRange(data.range))
@@ -161,7 +182,6 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         _warning_text.postValue(ResourceMapper().mapToWarningText(data.text_id, data.type))
         _warning_audio.postValue(ResourceMapper().mapToWarningAudio(data.text_id, data.type))
         _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id, data.type))
-
     }
     private fun updateWarning(data: V2XWarnInform) {
         _warning.postValue(data.toString())
@@ -197,6 +217,10 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     private fun updateRV2Status(data: V2XRSUStatus) { _rv2.postValue(data.toString()) }
     private fun updateRV3Status(data: V2XRSUStatus) { _rv3.postValue(data.toString()) }
     private fun updateRV4Status(data: V2XRSUStatus) { _rv4.postValue(data.toString()) }
+    private fun updateTrackingObj1(data: V2XTrackingObj) { _track_obj1.postValue(data.toString()) }
+    private fun updateTrackingObj2(data: V2XTrackingObj) { _track_obj2.postValue(data.toString()) }
+    private fun updateTrackingObj3(data: V2XTrackingObj) { _track_obj3.postValue(data.toString()) }
+    private fun updateWow(data: V2XWow) { _wow.postValue(data.toString()) }
 
     suspend fun callbackWarning() { getCarUseCase.callbackWarning().collect { value -> updateWarning(value) } }
     suspend fun callbackInform() { getCarUseCase.callbackInform().collect { value -> updateInform(value) } }
@@ -208,4 +232,8 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     suspend fun callbackRV2() { getCarUseCase.callbackRV2Status().collect { value -> updateRV2Status(value) } }
     suspend fun callbackRV3() { getCarUseCase.callbackRV3Status().collect { value -> updateRV3Status(value) } }
     suspend fun callbackRV4() { getCarUseCase.callbackRV4Status().collect { value -> updateRV4Status(value) } }
+    suspend fun callbackTrackingObj1() { getCarUseCase.callbackTrackingObj1().collect { value -> updateTrackingObj1(value) } }
+    suspend fun callbackTrackingObj2() { getCarUseCase.callbackTrackingObj2().collect { value -> updateTrackingObj2(value) } }
+    suspend fun callbackTrackingObj3() { getCarUseCase.callbackTrackingObj3().collect { value -> updateTrackingObj3(value) } }
+    suspend fun callbackWow() { getCarUseCase.callbackWow().collect { value -> updateWow(value) } }
 }

@@ -1,10 +1,8 @@
 package com.humaxdigital.automotive.v2xpoc.presentation.test
 
-import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.KeyEvent
 import com.humaxdigital.automotive.v2xpoc.App
 import com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainActivity

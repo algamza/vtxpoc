@@ -2,43 +2,87 @@ package com.humaxdigital.automotive.v2xpoc.data.entities
 
 import com.humaxdigital.automotive.v2xpoc.domain.entities.*
 
-/*
-VAL_ 1876 RT_SignalPhase 3 "green=3" 2 "yellow=2" 1 "red=1" 0 "unknown=0" ;
-VAL_ 1876 LT_SignalPhase 3 "green=3" 2 "yellow=2" 1 "red=1" 0 "unknown=0" ;
-VAL_ 1876 SL_SignalPhase 3 "green=3" 2 "yellow=2" 1 "red=1" 0 "unknown=0" ;
-VAL_ 1875 LaneType 41 "right_curved_lv9" 40 "right_curved_lv8" 39 "right_curved_lv7" 38 "right_curved_lv6" 37 "right_curved_lv5" 36 "right_curved_lv4" 35 "right_curved_lv3" 34 "right_curved_lv2" 33 "right_curved_lv1" 32 "right_curved" 25 "left_curved-lv9" 24 "left_curved-lv8" 23 "left_curved-lv7" 22 "left_curved-lv6" 21 "left_curved-lv5" 20 "left_curved-lv4" 19 "left_curved-lv3" 18 "left_curved-lv2" 17 "left_curved-lv1" 16 "left_curved=0x10" 1 "straight=1" 0 "unknown=0" ;
-VAL_ 1875 LightStatus 16 "abs=0x10" 8 "hazard=0x08" 4 "turn_right=0x04" 2 "turn_left=0x02" 1 "brake=0x01" 0 "off=0" ;
-VAL_ 1875 GearStatus 7 "reserved4=7" 6 "reserved3=6" 5 "reserved2=5" 4 "reserved1=4" 3 "reversegears=3" 2 "farwardgears=2" 1 "park=1" 0 "neutral=0" ;
-VAL_ 1875 V2XStatus 8 "APP" 4 "V2I" 2 "V2V" 1 "GPS" 0 "ALL_OFF" ;
-VAL_ 1874 Inform_Severity 9 "L9" 8 "L8" 7 "L7" 6 "L6" 5 "L5" 4 "L4" 3 "L3" 2 "L2" 1 "L1" 0 "L0" ;
-VAL_ 1874 Inform_Direction 8 "BACKWARD" 4 "FORWARD" 2 "RIGHT" 1 "LEFT" 0 "Unknown" ;
-VAL_ 1874 Inform_Type 16 "EVW" 15 "TJW" 14 "IVS" 13 "GLOSA" 12 "VRUCW" 11 "RLVW" 10 "SLW" 9 "HLW" 8 "CLW" 7 "AVW" 6 "EBW" 5 "DNPW" 4 "BSW/LCW" 3 "LTA" 2 "ICW" 1 "FCW" 0 "HeartBeat message to HMI" ;
-VAL_ 1873 Warn_Severity 9 "L9" 8 "L8" 7 "L7" 6 "L6" 5 "L5" 4 "L4" 3 "L3" 2 "L2" 1 "L1" 0 "L0" ;
-VAL_ 1873 Warn_Direction 8 "BACKWARD" 4 "FORWARD" 2 "RIGHT" 1 "LEFT" 0 "Unknown" ;
-VAL_ 1873 Warn_Type 16 "EVW" 15 "TJW" 14 "IVS" 13 "GLOSA" 12 "VRUCW" 11 "RLVW" 10 "SLW" 9 "HLW" 8 "CLW" 7 "AVW" 6 "EBW" 5 "DNPW" 4 "BSW/LCW" 3 "LTA" 2 "ICW" 1 "FCW" 0 "HeartBeat message to HMI" ;
-*/
-
 class CarSignalMapper constructor() {
     fun mapToEntity(warning: WarnInform) : V2XWarnInform {
         return V2XWarnInform(getType(warning.type), getDirection(warning.direction), getSeverity(warning.severity)
             , warning.range, warning.icon_id, warning.audio_id, warning.text_id, getPushed(warning.pushed))
     }
+
     fun mapToEntity(vehicleStatus: VehicleStatus) : V2XVehicleStatus {
         return V2XVehicleStatus(getV2XState(vehicleStatus.status), vehicleStatus.speed, getGear(vehicleStatus.gear)
-            , getLight(vehicleStatus.light), getLane(vehicleStatus.lane), vehicleStatus.speed_limit)
+            , getLight(vehicleStatus.light), vehicleStatus.optimal_speed, vehicleStatus.speed_limit, vehicleStatus.radius_curve)
     }
     fun mapToEntity(sPaT: SPaT) : V2XSPaT {
         return V2XSPaT(getSignal(sPaT.sl_phase), sPaT.sl_end, getSignal(sPaT.lt_phase),
-            sPaT.lt_end, getSignal(sPaT.rt_phase), sPaT.rt_end)
+            sPaT.lt_end, getSignal(sPaT.rt_phase), sPaT.rt_end, getSignal(sPaT.ut_phase), sPaT.ut_end)
     }
     fun mapToEntity(hvpos: HVPos) : V2XHVPos {
-        return V2XHVPos(hvpos.lon, hvpos.lat)
+        return V2XHVPos(hvpos.lat, hvpos.lon)
     }
     fun mapToEntity(hvmotion: HVMotion) : V2XHVMotion {
-        return V2XHVMotion(hvmotion.motion_heading, hvmotion.vehicle_heading, hvmotion.vehicle_speed, hvmotion.alt)
+        return V2XHVMotion(hvmotion.alt, hvmotion.vehicle_speed, hvmotion.vehicle_heading, hvmotion.motion_heading)
     }
     fun mapToEntity(rv: RSUStatus) : V2XRSUStatus {
-        return V2XRSUStatus(rv.text_id, rv.icon_id, rv.lon_offset, rv.lat_offset)
+        return V2XRSUStatus(rv.lat_offset, rv.lon_offset, rv.text_id, rv.icon_id)
+    }
+    fun mapToEntity(obj: TrackingObj) : V2XTrackingObj {
+        return V2XTrackingObj(getTrackingType(obj.to1_type), getTrackingStatus(obj.to1_status), obj.to1_lat_dist, obj.to1_long_dist,
+            getTrackingType(obj.to2_type), getTrackingStatus(obj.to2_status), obj.to2_lat_dist, obj.to2_long_dist,
+            getTrackingType(obj.to3_type), getTrackingStatus(obj.to3_status), obj.to3_lat_dist, obj.to3_long_dist,
+            getTrackingType(obj.to4_type), getTrackingStatus(obj.to4_status), obj.to4_lat_dist, obj.to4_long_dist)
+    }
+    fun mapToEntity(ext: Ext) : V2XWow {
+        return V2XWow(getWowCmd(ext.sig1), getEmoticon(ext.sig2), getDirection(ext.sig3), ext.sig4, ext.sig5)
+    }
+
+    private fun getEmoticon(emo: Int) : EMOTICON {
+        var _cmd = EMOTICON(false, false, false,
+            false, false, false, false, false)
+        var _mask : Int = 1
+        if ( emo and _mask.shl(0) != 0 ) _cmd.type1 = true
+        if ( emo and _mask.shl(1) != 0 ) _cmd.type2 = true
+        if ( emo and _mask.shl(2) != 0 ) _cmd.type3 = true
+        if ( emo and _mask.shl(3) != 0 ) _cmd.type4 = true
+        if ( emo and _mask.shl(4) != 0 ) _cmd.type5 = true
+        if ( emo and _mask.shl(5) != 0 ) _cmd.type6 = true
+        if ( emo and _mask.shl(6) != 0 ) _cmd.leader = true
+        if ( emo and _mask.shl(7) != 0 ) _cmd.follower = true
+        return _cmd
+    }
+
+    private fun getWowCmd(cmd: Int) : WOWCMD {
+        var _cmd = WOWCMD(false, false, false,
+            false, false, false, false, false)
+        var _mask : Int = 1
+        if ( cmd and _mask.shl(0) != 0 ) _cmd.emoticon_ready = true
+        if ( cmd and _mask.shl(1) != 0 ) _cmd.emoticon_send = true
+        if ( cmd and _mask.shl(2) != 0 ) _cmd.emoticon_stop = true
+        if ( cmd and _mask.shl(3) != 0 ) _cmd.emoticon_recv = true
+        if ( cmd and _mask.shl(4) != 0 ) _cmd.location_ready = true
+        if ( cmd and _mask.shl(5) != 0 ) _cmd.location_send = true
+        if ( cmd and _mask.shl(6) != 0 ) _cmd.location_recv = true
+        if ( cmd and _mask.shl(7) != 0 ) _cmd.location_stop = true
+        return _cmd
+    }
+
+    private fun getTrackingStatus(status:Int) : TRACKSTATUS {
+        var _status = TRACKSTATUS.OFF
+        when(status) {
+            0 -> _status = TRACKSTATUS.OFF
+            1 -> _status = TRACKSTATUS.ON
+            2 -> _status = TRACKSTATUS.WARN
+        }
+        return _status
+    }
+
+    private fun getTrackingType(type:Int) : TRACKYPE {
+        var _type = TRACKYPE.CAR
+        when(type) {
+            0 -> _type = TRACKYPE.CAR
+            1 -> _type = TRACKYPE.EMERGENCY
+            2 -> _type = TRACKYPE.PEDASTRAIN
+        }
+        return _type
     }
 
     private fun getSignal(signal:Int) : SIGNAL {

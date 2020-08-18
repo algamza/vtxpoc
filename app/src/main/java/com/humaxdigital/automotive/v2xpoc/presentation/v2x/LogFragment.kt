@@ -65,6 +65,23 @@ class LogFragment : Fragment() {
             text_log.append(it+"\n")
             updateScroll()
         })
+        vm.track_obj1.observe(this, Observer {
+            text_log.append(it+"\n")
+            updateScroll()
+        })
+        vm.track_obj2.observe(this, Observer {
+            text_log.append(it+"\n")
+            updateScroll()
+        })
+        vm.track_obj3.observe(this, Observer {
+            text_log.append(it+"\n")
+            updateScroll()
+        })
+        vm.wow.observe(this, Observer {
+            text_log.append(it+"\n")
+            updateScroll()
+        })
+
         return inflater.inflate(R.layout.fragment_log, null)
     }
 
