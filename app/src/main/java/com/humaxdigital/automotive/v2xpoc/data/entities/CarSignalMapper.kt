@@ -7,7 +7,6 @@ class CarSignalMapper constructor() {
         return V2XWarnInform(getType(warning.type), getDirection(warning.direction), getSeverity(warning.severity)
             , warning.range, warning.icon_id, warning.audio_id, warning.text_id, getPushed(warning.pushed))
     }
-
     fun mapToEntity(vehicleStatus: VehicleStatus) : V2XVehicleStatus {
         return V2XVehicleStatus(getV2XState(vehicleStatus.status), vehicleStatus.speed, getGear(vehicleStatus.gear)
             , getLight(vehicleStatus.light), vehicleStatus.optimal_speed, vehicleStatus.speed_limit, vehicleStatus.radius_curve)

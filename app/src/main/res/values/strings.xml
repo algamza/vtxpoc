@@ -1,14 +1,10 @@
 <resources>
     <string name="app_name">V2xPoc</string>
-    <string-array name="v2x_type">
-        <item>左/右测有车辆，请注意安全</item>
-        <item>前方有直行车辆，请注意行驶</item>
-        <item>前方车辆紧急刹车，请注意减速绕行</item>
-        <item>前方有故障车辆，请注意绕行</item>
-        <item>前方有危险路段，请注意绕行</item>
-        <item>前方信号灯即将变红，请及时停车（待讨论)</item>
-        <item>对面有车辆驶过，请不要超车（前方有车辆驶过，不宜超车)</item>
-        <item>后方有（警车／救护车／消防车）紧急呼叫车辆，请让路（请靠边)</item>
-        <item>前方路段拥堵（前方堵车)</item>
-    </string-array>
+    <string name="warning_ebw_1">\"Emergency Brake Warning!\"</string>
+    <string name="warning_evw_1">Emergency Vehicle Approach\nSlow Down!</string>
+    <string name="warning_evw_2">Emergency Vehicle Approach\nFrom Right</string>
+    <string name="warning_evw_3">Emergency Vehicle Approach\nFrom Left</string>
+    <string name="warning_icw_1">Intersection Warning!</string>
+    <string name="warning_lta_1">Left Turn Warning!</string>
+    <string name="empty"></string>
 </resources>

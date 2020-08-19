@@ -13,13 +13,11 @@
         android:background="@drawable/v2x_bg_basic">
 
         <ImageView
-            android:id="@+id/img_v2x_bg_evw_dim"
             android:layout_width="1280px"
             android:layout_height="630px"
             android:src="@drawable/v2x_bg_evw_dim"/>
 
         <TextView
-            android:id="@+id/text_ebw_warning"
             android:layout_width="656px"
             android:layout_height="97px"
             android:layout_marginLeft="316px"

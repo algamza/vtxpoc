@@ -77,12 +77,12 @@ class MainActivity : AppCompatActivity() {
     private fun mapToFragment(type: V2XTYPE) = when(type) {
         V2XTYPE.EBW -> EBWFragment::class.java
         V2XTYPE.EVW -> EVWFragment::class.java
+        V2XTYPE.ICW -> ICWFragment::class.java
+        V2XTYPE.LTA -> LTAFragemnt::class.java
         /*
         V2XTYPE.NONE -> {}
         V2XTYPE.HB -> {}
         V2XTYPE.FCW -> {}
-        V2XTYPE.ICW -> {}
-        V2XTYPE.LTA -> {}
         V2XTYPE.BSW_LCW -> {}
         V2XTYPE.DNPW -> {}
         V2XTYPE.AVW -> {}

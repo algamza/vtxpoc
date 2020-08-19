@@ -57,19 +57,31 @@ class ResourceMapper constructor() {
     fun mapToWarningText(index: Int, type: TYPE) = when(type) {
         TYPE.EBW -> {
             when(index) {
-                1 -> "Emergency Brake Warning!"
-                else -> ""
+                1 -> R.string.warning_ebw_1
+                else -> R.string.empty
             }
         }
         TYPE.EVW -> {
             when(index) {
-                1 -> "Emergency Vehicle Approach\nSlow Down!"
-                2 -> "Emergency Vehicle Approach\nFrom Right"
-                3 -> "Emergency Vehicle Approach\nFrom Left"
-                else -> ""
+                1 -> R.string.warning_evw_1
+                2 -> R.string.warning_evw_2
+                3 -> R.string.warning_evw_3
+                else -> R.string.empty
             }
         }
-        else -> ""
+        TYPE.ICW -> {
+            when(index) {
+                1 -> R.string.warning_icw_1
+                else -> R.string.empty
+            }
+        }
+        TYPE.LTA -> {
+            when(index) {
+                1 -> R.string.warning_lta_1
+                else -> R.string.empty
+            }
+        }
+        else -> R.string.empty
     }
     fun mapToWarningAudio(index: Int, type: TYPE) = when(type) {
         TYPE.EBW -> {
@@ -103,12 +115,20 @@ class ResourceMapper constructor() {
                 else -> 0
             }
         }
+        TYPE.ICW -> {
+            0
+        }
         else -> 0
     }
-    fun mapToRange(range: Int) = when(range) {
-        in 0..69 -> R.drawable.v2x_img_level_warning_01
-        in 70..210 -> R.drawable.v2x_img_level_warning_02
-        in 210..255 -> R.drawable.v2x_img_level_warning_03
+    fun mapToRange(range: Int, type: TYPE) = when(type) {
+        TYPE.EBW -> {
+            when(range) {
+                in 0..69 -> R.drawable.v2x_img_level_warning_01
+                in 70..210 -> R.drawable.v2x_img_level_warning_02
+                in 210..255 -> R.drawable.v2x_img_level_warning_03
+                else -> R.drawable.v2x_img_level_straight
+            }
+        }
         else -> R.drawable.v2x_img_level_straight
     }
     fun mapToDistance(range: Int) = when(range) {
@@ -142,5 +162,35 @@ class ResourceMapper constructor() {
         PUSHED.UPDATE -> V2XPUSHED.UPDATE
         PUSHED.ADD -> V2XPUSHED.ADD
         PUSHED.NONE -> V2XPUSHED.NONE
+    }
+    fun mapToWarningDirection(direction: DIRECTION, type: TYPE) = when(type) {
+        TYPE.LTA,
+        TYPE.ICW -> {
+            if ( direction.right ) R.drawable.v2x_img_icw_car_r
+            else if ( direction.left ) R.drawable.v2x_img_icw_car_l
+            else if ( direction.forward ) R.drawable.v2x_img_icw_car_f
+            else R.drawable.v2x_img_icw_car_r
+        }
+        else -> 0
+    }
+    fun mapToWarningSeverity(severity: SEVERITY, type:TYPE, direction: DIRECTION) = when(type) {
+        TYPE.ICW -> {
+            when(severity) {
+                SEVERITY.L1 -> {
+                    if ( direction.left ) R.drawable.v2x_ic_icw_warning_l_01
+                    else R.drawable.v2x_ic_icw_warning_r_01
+                }
+                SEVERITY.L2 -> {
+                    if ( direction.left ) R.drawable.v2x_ic_icw_warning_l_02
+                    else R.drawable.v2x_ic_icw_warning_r_02
+                }
+                SEVERITY.L3 -> {
+                    if ( direction.left ) R.drawable.v2x_ic_icw_warning_l_03
+                    else R.drawable.v2x_ic_icw_warning_r_03
+                }
+                else -> 0
+            }
+        }
+        else -> 0
     }
 }
