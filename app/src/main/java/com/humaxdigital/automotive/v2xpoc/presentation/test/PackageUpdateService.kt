@@ -12,7 +12,8 @@ import androidx.core.content.FileProvider
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
-
+import java.io.InputStream
+import java.security.MessageDigest
 
 private const val ACTION_CHECK_AND_UPDATE_PACKAGE =
     "com.humaxdigital.automotive.v2xpoc.hidden.action.CHECK_AND_UPDATE_PACKAGE"
@@ -35,30 +36,51 @@ class PackageUpdateService : IntentService("PackageUpdateService") {
      * Handle action for checking and updating new version of package
      */
     private fun handleActionCheckAndUpdatePackage() {
-        var hiddenPath = getV2XHiddenPath()
-        Log.i(TAG, "handleActionCheckAndUpdatePackage() " + hiddenPath)
-
-        hiddenPath.let {
-            var file = File(hiddenPath + File.separator + "V2X.apk")
+        getV2XHiddenPath()?.let {
+            var file = File(it + File.separator + "V2X.apk")
             if (file.exists()) {
-                // TODO: check version or hash
-                if (INSTALL_BY_FILES_APP) {
-                    val pm: PackageManager = getPackageManager()
-                    startActivity(pm.getLaunchIntentForPackage("com.android.documentsui"))
-                } else {
-                    installPackage(file)
+                var newHash = file.getMD5Hash().toHexString()
+                var insHash : String = ""
+
+                getInstalledPath()?.let {
+                    var installedFile = File(it + File.separator + "base.apk")
+                    if (installedFile.exists()) {
+                        insHash = installedFile.getMD5Hash().toHexString();
+                    }
+                }
+
+                Log.i(TAG, "Check MD5 - new:$newHash, installed:$insHash")
+
+                if (!newHash.equals(insHash)) {
+                    if (INSTALL_BY_FILES_APP) {
+                        Log.i(TAG, "Found .apk file '$it', launching 'files' app, user can install it")
+                        val pm: PackageManager = getPackageManager()
+                        startActivity(pm.getLaunchIntentForPackage("com.android.documentsui"))
+                    } else {
+                        Log.i(TAG, "Found .apk file '$it', launching the installer...")
+                        installPackage(file)
+                    }
                 }
             }
         }
     }
 
     private fun getV2XHiddenPath(): String? {
-        var storagePath = getStoragePath(this)
-        storagePath.let {
-            val hiddenPath = storagePath + File.separator + ".v2xpoc"
+        getStoragePath(this)?.let {
+            val hiddenPath = it + File.separator + ".v2xpoc"
             val hiddenFile = File(hiddenPath);
             if (hiddenFile.exists() && hiddenFile.isDirectory) {
                 return hiddenPath;
+            }
+        }
+        return null
+    }
+
+    private fun getInstalledPath(): String? {
+        val files: Array<File> = File("/data/app").listFiles()
+        for (file in files) {
+            if (file.isDirectory && file.name.startsWith(applicationInfo.packageName)) {
+                return "/data/app/" + file.name
             }
         }
         return null
@@ -100,6 +122,24 @@ class PackageUpdateService : IntentService("PackageUpdateService") {
         startActivity(intent)
     }
 
+    private fun File.getMD5Hash(): ByteArray {
+        val md = MessageDigest.getInstance("MD5")
+        val stream: InputStream
+        stream = FileInputStream(this)
+
+        val buffer = ByteArray(8192)
+        var read: Int
+        while (stream.read(buffer).also { read = it } > 0) {
+            md.update(buffer, 0, read)
+        }
+        stream.close()
+        return md.digest()
+    }
+
+    private fun ByteArray.toHexString(): String {
+        return this.fold(StringBuilder()) { result, b -> result.append(String.format("%02X", b)) }.toString()
+    }
+
     private fun getApkUri(file: File): Uri? {
         // Before N, a MODE_WORLD_READABLE file could be passed via the ACTION_INSTALL_PACKAGE
         // Intent. Since N, MODE_WORLD_READABLE files are forbidden, and a FileProvider is
@@ -122,7 +162,7 @@ class PackageUpdateService : IntentService("PackageUpdateService") {
                 }
             }
         } catch (e: IOException) {
-            Log.i("InstallApk", "Failed to write temporary APK file", e)
+            Log.i(TAG, "Failed to write temporary APK file", e)
         }
         return if (useFileProvider) {
             val toInstall = File(this.filesDir, tempFilename)
