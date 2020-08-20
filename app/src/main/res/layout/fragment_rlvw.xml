@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainViewModel" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/v2x_bg_icw">
+
+        <TextView
+            android:layout_width="656px"
+            android:layout_height="97px"
+            android:layout_marginLeft="316px"
+            android:layout_marginTop="25px"
+            android:gravity="center_horizontal|top"
+            android:text="@{vm.warning_text}"
+            android:textSize="32px"
+            android:textColor="#ffffff" />
+
+        <ImageView
+            android:layout_width="267px"
+            android:layout_height="151px"
+            android:layout_marginTop="248px"
+            android:layout_gravity="center_horizontal"
+            app:id_range="@{vm.id_range}" />
+
+        <TextView
+            android:layout_width="154px"
+            android:layout_height="50px"
+            android:layout_marginLeft="564px"
+            android:layout_marginTop="301px"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@{vm.warning_distance}"
+            android:textSize="42px"
+            android:textColor="#ffffff"
+            android:shadowColor="#000000"
+            android:shadowRadius="1.0"
+            android:shadowDx="2.0"
+            android:shadowDy="2.0" />
+
+        <ImageView
+            android:layout_width="504px"
+            android:layout_height="329px"
+            android:layout_marginTop="301px"
+            android:layout_gravity="center_horizontal"
+            app:id_light_brake="@{vm.id_light_brake}" />
+
+
+        <ImageView
+            android:layout_width="185px"
+            android:layout_height="124px"
+            android:layout_marginTop="172px"
+            app:id_severity_icon="@{vm.id_warning_severity}"/>
+
+        <ImageView
+            android:layout_width="278px"
+            android:layout_height="124px"
+            android:layout_marginTop="172px"
+            android:layout_marginLeft="189px"
+            app:id_icw_direction_icon="@{vm.id_warning_direction}"/>
+
+    </FrameLayout>
+</layout>
+

@@ -81,6 +81,18 @@ class ResourceMapper constructor() {
                 else -> R.string.empty
             }
         }
+        TYPE.FCW -> {
+            when(index) {
+                1 -> R.string.warning_fcw_1
+                else -> R.string.empty
+            }
+        }
+        TYPE.BSW_LCW -> {
+            when(index) {
+                1 -> R.string.warning_bsw_1
+                else -> R.string.empty
+            }
+        }
         else -> R.string.empty
     }
     fun mapToWarningAudio(index: Int, type: TYPE) = when(type) {
@@ -115,8 +127,12 @@ class ResourceMapper constructor() {
                 else -> 0
             }
         }
-        TYPE.ICW -> {
-            0
+        TYPE.BSW_LCW -> {
+            when(index) {
+                1 -> R.drawable.v2x_img_pop_bsw_l
+                2 -> R.drawable.v2x_img_pop_bsw_r
+                else -> 0
+            }
         }
         else -> 0
     }

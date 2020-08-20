@@ -95,35 +95,6 @@ class CarSignalMapper constructor() {
         return _signal
     }
 
-    private fun getLane(lane:Int) : LANE {
-        var _lane = LANE.UNKNOWN
-        when(lane) {
-            0->_lane=LANE.UNKNOWN
-            1->_lane=LANE.STRAIGHT
-            16->_lane=LANE.LCURVED
-            17->_lane=LANE.LCURVED_L1
-            18->_lane=LANE.LCURVED_L2
-            19->_lane=LANE.LCURVED_L3
-            20->_lane=LANE.LCURVED_L4
-            21->_lane=LANE.LCURVED_L5
-            22->_lane=LANE.LCURVED_L6
-            23->_lane=LANE.LCURVED_L7
-            24->_lane=LANE.LCURVED_L8
-            25->_lane=LANE.LCURVED_L9
-            32->_lane=LANE.RCURVED
-            33->_lane=LANE.RCURVED_L1
-            34->_lane=LANE.RCURVED_L2
-            35->_lane=LANE.RCURVED_L3
-            36->_lane=LANE.RCURVED_L4
-            37->_lane=LANE.RCURVED_L5
-            38->_lane=LANE.RCURVED_L6
-            39->_lane=LANE.RCURVED_L7
-            40->_lane=LANE.RCURVED_L8
-            41->_lane=LANE.RCURVED_L9
-        }
-        return _lane
-    }
-
     private fun getLight(light:Int) : LIGHT {
         var _mask : Int = 1
         var _light = LIGHT(false, false, false, false, false)

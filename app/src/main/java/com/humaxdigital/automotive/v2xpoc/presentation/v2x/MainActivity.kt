@@ -79,11 +79,11 @@ class MainActivity : AppCompatActivity() {
         V2XTYPE.EVW -> EVWFragment::class.java
         V2XTYPE.ICW -> ICWFragment::class.java
         V2XTYPE.LTA -> LTAFragemnt::class.java
+        V2XTYPE.FCW -> FCWFragment::class.java
+        V2XTYPE.BSW_LCW -> BSWFragment::class.java
         /*
         V2XTYPE.NONE -> {}
         V2XTYPE.HB -> {}
-        V2XTYPE.FCW -> {}
-        V2XTYPE.BSW_LCW -> {}
         V2XTYPE.DNPW -> {}
         V2XTYPE.AVW -> {}
         V2XTYPE.CLW -> {}

@@ -1,5 +1,6 @@
 package com.humaxdigital.automotive.v2xpoc.presentation.v2x
 
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

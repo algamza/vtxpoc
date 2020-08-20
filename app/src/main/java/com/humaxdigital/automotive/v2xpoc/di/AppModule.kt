@@ -40,5 +40,7 @@ val mAppModules = module {
     fragment { EVWFragment() }
     fragment { ICWFragment() }
     fragment { LTAFragemnt() }
+    fragment { BSWFragment() }
+    fragment { FCWFragment() }
     fragment { LogFragment() }
 }

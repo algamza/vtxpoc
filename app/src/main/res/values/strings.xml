@@ -6,5 +6,8 @@
     <string name="warning_evw_3">Emergency Vehicle Approach\nFrom Left</string>
     <string name="warning_icw_1">Intersection Warning!</string>
     <string name="warning_lta_1">Left Turn Warning!</string>
+    <string name="warning_fcw_1">Forward Collision Warning</string>
+    <string name="warning_bsw_1">Blind Spot Warning</string>
+    <string name="warning_rlvw_1">Signal Violation Warning!</string>
     <string name="empty"></string>
 </resources>

@@ -1,5 +1,6 @@
 package com.humaxdigital.automotive.v2xpoc.data.entities
 
+import android.security.keystore.ArrayUtils
 import android.util.Log
 
 class CarSignalParser constructor() {
@@ -44,89 +45,58 @@ class CarSignalParser constructor() {
     }
 
     fun parseAsHVPos(data: ByteArray) : HVPos {
-        var lat = ByteStream()
-            .bytesToFloat(byteArrayOf(data[0], data[1], data[2], data[3]))
-        var lon = ByteStream()
-            .bytesToFloat(byteArrayOf(data[4], data[5], data[6], data[7]))
+        var lat = ByteStream().bytesToFloat(byteArrayOf(data[0], data[1], data[2], data[3]))
+        var lon = ByteStream().bytesToFloat(byteArrayOf(data[4], data[5], data[6], data[7]))
         return HVPos(lat, lon).also { Log.d(TAG, it.toString()) }
     }
 
     fun parseAsHVMotion(data: ByteArray) : HVMotion {
-        var alt =  ByteStream()
-            .bytesToFloat(byteArrayOf(data[0], data[1]))
-        var speed = ByteStream()
-            .bytesToFloat(byteArrayOf(data[2], data[3]))
-        var vehicle_heading = ByteStream()
-            .bytesToFloat(byteArrayOf(data[4], data[5]))
-        var motion_heading = ByteStream()
-            .bytesToFloat(byteArrayOf(data[6], data[7]))
+        var alt =  ByteStream().bytesToFloat(byteArrayOf(data[0], data[1]))
+        var speed = ByteStream().bytesToFloat(byteArrayOf(data[2], data[3]))
+        var vehicle_heading = ByteStream().bytesToFloat(byteArrayOf(data[4], data[5]))
+        var motion_heading = ByteStream().bytesToFloat(byteArrayOf(data[6], data[7]))
         return HVMotion(alt, speed, vehicle_heading, motion_heading)
             .also { Log.d(TAG, it.toString()) }
     }
 
     fun parseAsRSUStatus(data: ByteArray) : RSUStatus {
-        var lon = ByteStream()
-            .bytesToFloat(byteArrayOf(data[0], data[1], data[2]))
-        var lat = ByteStream()
-            .bytesToFloat(byteArrayOf(data[3], data[4], data[5]))
+        var lon = ByteStream().bytesToFloat(byteArrayOf(data[0], data[1], data[2]))
+        var lat = ByteStream().bytesToFloat(byteArrayOf(data[3], data[4], data[5]))
         var text = data[6].toUByte().toInt()
         var icon = data[7].toUByte().toInt()
         return RSUStatus(lon, lat, text, icon).also { Log.d(TAG, it.toString()) }
     }
 
     fun parseAsTrackingObject(data: ByteArray) : TrackingObj {
-        var to1_type = ByteStream()
-            .byteToUByte(data[0], 0, 2).toInt()
-        var to1_status = ByteStream()
-            .byteToUByte(data[0], 2, 2).toInt()
-        var to1_lat = ByteStream()
-            .byteToInt(data[0], 4, 4)
+        var to1_type = ByteStream().byteToUInt(data[0], 0, 2).toInt()
+        var to1_status = ByteStream().byteToUInt(data[0], 2, 2).toInt()
+        var to1_lat = ByteStream().byteToInt(data[0], 4, 4)
         var to1_lon = data[1].toInt()
 
         var to2_type = ByteStream()
-            .byteToUByte(data[2], 0, 2).toInt()
+            .byteToUInt(data[2], 0, 2).toInt()
         var to2_status = ByteStream()
-            .byteToUByte(data[2], 2, 2).toInt()
+            .byteToUInt(data[2], 2, 2).toInt()
         var to2_lat = ByteStream()
             .byteToInt(data[2], 4, 4)
         var to2_lon = data[3].toInt()
 
         var to3_type = ByteStream()
-            .byteToUByte(data[4], 0, 2).toInt()
+            .byteToUInt(data[4], 0, 2).toInt()
         var to3_status = ByteStream()
-            .byteToUByte(data[4], 2, 2).toInt()
+            .byteToUInt(data[4], 2, 2).toInt()
         var to3_lat = ByteStream()
             .byteToInt(data[4], 4, 4)
         var to3_lon = data[5].toInt()
 
         var to4_type = ByteStream()
-            .byteToUByte(data[6], 0, 2).toInt()
+            .byteToUInt(data[6], 0, 2).toInt()
         var to4_status = ByteStream()
-            .byteToUByte(data[6], 2, 2).toInt()
+            .byteToUInt(data[6], 2, 2).toInt()
         var to4_lat = ByteStream()
             .byteToInt(data[6], 4, 4)
         var to4_lon = data[7].toInt()
-        /*
-        var to1_type = data[0].toUByte().toInt().shr(6) and 0x03
-        var to1_status = data[0].toUByte().toInt().shr(4) and 0x03
-        var to1_lat = data[0].toInt() and 0x0F
-        var to1_lon = data[1].toInt()
 
-        var to2_type = data[2].toUByte().toInt().shr(6) and 0x03
-        var to2_status = data[2].toUByte().toInt().shr(4) and 0x03
-        var to2_lat = data[2].toInt()
-        var to2_lon = data[3].toInt()
-
-        var to3_type = data[4].toUByte().toInt().shr(6) and 0x03
-        var to3_status = data[4].toUByte().toInt().shr(4) and 0x03
-        var to3_lat = data[4].toInt()
-        var to3_lon = data[5].toInt()
-
-        var to4_type = data[6].toUByte().toInt().shr(6) and 0x03
-        var to4_status = data[6].toUByte().toInt().shr(4) and 0x03
-        var to4_lat = data[6].toInt() and 0x0F
-        var to4_lon = data[7].toInt()
-*/
         return TrackingObj(to1_type, to1_status, to1_lat, to1_lon,
             to2_type, to2_status, to2_lat, to2_lon,
             to3_type, to3_status, to3_lat, to3_lon,
