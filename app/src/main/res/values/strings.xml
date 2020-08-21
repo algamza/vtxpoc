@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">V2xPoc</string>
-    <string name="warning_ebw_1">\"Emergency Brake Warning!\"</string>
+    <string name="warning_ebw_1">Emergency Brake Warning!</string>
     <string name="warning_evw_1">Emergency Vehicle Approach\nSlow Down!</string>
     <string name="warning_evw_2">Emergency Vehicle Approach\nFrom Right</string>
     <string name="warning_evw_3">Emergency Vehicle Approach\nFrom Left</string>

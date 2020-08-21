@@ -98,19 +98,43 @@ class ResourceMapper constructor() {
     fun mapToWarningAudio(index: Int, type: TYPE) = when(type) {
         TYPE.EBW -> {
             when(index) {
-                1 -> "beep"
-                else -> ""
+                1 -> R.string.warning_ebw_1
+                else -> R.string.empty
             }
         }
         TYPE.EVW -> {
             when(index) {
-                1 -> "Emergency Vehicle Approach. Slow Down!"
-                2 -> "Emergency Vehicle Approach. From Right"
-                3 -> "Emergency Vehicle Approach. From Left"
-                else -> ""
+                1 -> R.string.warning_evw_1
+                2 -> R.string.warning_evw_2
+                3 -> R.string.warning_evw_3
+                else -> R.string.empty
             }
         }
-        else -> ""
+        TYPE.ICW -> {
+            when(index) {
+                1 -> R.string.warning_icw_1
+                else -> R.string.empty
+            }
+        }
+        TYPE.LTA -> {
+            when(index) {
+                1 -> R.string.warning_lta_1
+                else -> R.string.empty
+            }
+        }
+        TYPE.FCW -> {
+            when(index) {
+                1 -> R.string.warning_fcw_1
+                else -> R.string.empty
+            }
+        }
+        TYPE.BSW_LCW -> {
+            when(index) {
+                1 -> R.string.warning_bsw_1
+                else -> R.string.empty
+            }
+        }
+        else -> R.string.empty
     }
     fun mapToWarningIcon(index: Int, type: TYPE) = when(type) {
         TYPE.EBW -> {

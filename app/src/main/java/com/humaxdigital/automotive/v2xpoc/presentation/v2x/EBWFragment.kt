@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.AudioManager
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class EBWFragment : Fragment() {
         vm.warning_audio.observe(this, Observer {
             when(vm.warning_pused.value) {
                 V2XPUSHED.ADD -> {
+                    Log.d(TAG, it)
                     if ( it.equals("beep") ) {
                         //ToneGenerator(AudioManager.STREAM_MUSIC, 100).startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT, 500)
                         var audio = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager

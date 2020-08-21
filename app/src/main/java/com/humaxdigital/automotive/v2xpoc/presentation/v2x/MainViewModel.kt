@@ -2,6 +2,7 @@ package com.humaxdigital.automotive.v2xpoc.presentation.v2x
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -187,7 +188,7 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         _id_range.postValue(ResourceMapper().mapToRange(data.range, data.type))
         _warning_distance.postValue(ResourceMapper().mapToDistance(data.range))
         _warning_text.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.text_id, data.type)))
-        _warning_audio.postValue(ResourceMapper().mapToWarningAudio(data.text_id, data.type))
+        _warning_audio.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.audio_id, data.type)))
         _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id, data.type))
         _id_warning_direction.postValue(ResourceMapper().mapToWarningDirection(data.direction, data.type))
         _id_warning_severity.postValue(ResourceMapper().mapToWarningSeverity(data.severity, data.type, data.direction))
@@ -199,7 +200,7 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         _id_range.postValue(ResourceMapper().mapToRange(data.range, data.type))
         _warning_distance.postValue(ResourceMapper().mapToDistance(data.range))
         _warning_text.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.text_id, data.type)))
-        _warning_audio.postValue(ResourceMapper().mapToWarningAudio(data.text_id, data.type))
+        _warning_audio.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.audio_id, data.type)))
         _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id, data.type))
         _id_warning_direction.postValue(ResourceMapper().mapToWarningDirection(data.direction, data.type))
         _id_warning_severity.postValue(ResourceMapper().mapToWarningSeverity(data.severity, data.type, data.direction))
