@@ -64,6 +64,10 @@ class CarRepositoryImpl constructor(private val api : CarApi) : CarRepository {
         return api.getExt().map { CarSignalMapper().mapToEntity(it) }
     }
 
+    override fun setWow(wow: Flow<V2XWow>) {
+        api.setExt(wow.map { CarSignalMapper().mapToExt(it) })
+    }
+
     @kotlinx.coroutines.ExperimentalCoroutinesApi
     override fun callbackWarning(): Flow<V2XWarnInform> {
         return api.callbackWarning().map { CarSignalMapper().mapToEntity(it) }

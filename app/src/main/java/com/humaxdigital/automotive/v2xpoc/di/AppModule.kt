@@ -36,11 +36,17 @@ val mAppModules = module {
     single { MainService() }
     fragment { MainFragment() }
     fragment { SideFragment() }
-    fragment { EBWFragment() }
-    fragment { EVWFragment() }
-    fragment { ICWFragment() }
-    fragment { LTAFragemnt() }
-    fragment { BSWFragment() }
-    fragment { FCWFragment() }
     fragment { LogFragment() }
+    fragment { AVWFragment() }
+    fragment { BSWFragment() }
+    fragment { EBWFragment() }
+    fragment { EVWCFragment() }
+    fragment { EVWLFragment() }
+    fragment { EVWRFragment() }
+    fragment { FCWFragment() }
+    fragment { ICWLFragment() }
+    fragment { ICWRFragment() }
+    fragment { LTAFragemnt() }
+    fragment { RWWAFragment() }
+    fragment { RWWLRFragment() }
 }

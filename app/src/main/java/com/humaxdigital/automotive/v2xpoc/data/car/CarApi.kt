@@ -5,10 +5,13 @@ import android.car.hardware.property.CarPropertyManager
 import android.extension.car.CarEx
 import android.util.Log
 import com.humaxdigital.automotive.v2xpoc.data.entities.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -60,20 +63,20 @@ class CarApi(car: CarEx) {
                 override fun onChangeEvent(p0: CarPropertyValue<*>) {
                     try {
                         when(p0.areaId) {
-                            ID_AREA_RX_V2X_WARNING -> { callback_warning!!(CarSignalParser().parseAsWarnInform(p0.value as ByteArray)) }
-                            ID_AREA_RX_V2X_INFORM -> { callback_inform!!(CarSignalParser().parseAsWarnInform(p0.value as ByteArray)) }
-                            ID_AREA_RX_V2X_VEHICLE_STATUS -> { callback_vehicle!!(CarSignalParser().parseAsVehicleStatus(p0.value as ByteArray)) }
-                            ID_AREA_RX_V2X_SPAT -> { callback_spat!!(CarSignalParser().parseAsSPaT(p0.value as ByteArray)) }
-                            ID_AREA_RX_V2X_HV_POS -> { callback_hvpos!!(CarSignalParser().parseAsHVPos(p0.value as ByteArray)) }
-                            ID_AREA_RX_V2X_HV_MOTION -> { callback_hvmotion!!(CarSignalParser().parseAsHVMotion(p0.value as ByteArray)) }
-                            ID_AREA_RX_V2X_RV1_STATUS -> { callback_rv1!!(CarSignalParser().parseAsRSUStatus(p0.value as ByteArray)) }
-                            ID_AREA_RX_V2X_RV2_STATUS -> { callback_rv2!!(CarSignalParser().parseAsRSUStatus(p0.value as ByteArray)) }
-                            ID_AREA_RX_V2X_RV3_STATUS -> { callback_rv3!!(CarSignalParser().parseAsRSUStatus(p0.value as ByteArray)) }
-                            ID_AREA_RX_V2X_RV4_STATUS -> { callback_rv4!!(CarSignalParser().parseAsRSUStatus(p0.value as ByteArray)) }
-                            ID_AREA_RX_TRACKING_OBJ1 -> { callback_tracking_obj1!!(CarSignalParser().parseAsTrackingObject(p0.value as ByteArray)) }
-                            ID_AREA_RX_TRACKING_OBJ2 -> { callback_tracking_obj2!!(CarSignalParser().parseAsTrackingObject(p0.value as ByteArray)) }
-                            ID_AREA_RX_TRACKING_OBJ3 -> { callback_tracking_obj3!!(CarSignalParser().parseAsTrackingObject(p0.value as ByteArray)) }
-                            //ID_AREA_RX_V2X_EXT02 -> { callback_ex2!!(CarSignalParser().parseAs(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_WARNING -> { callback_warning!!(CarSignalParser().decodeToWarnInform(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_INFORM -> { callback_inform!!(CarSignalParser().decodeToWarnInform(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_VEHICLE_STATUS -> { callback_vehicle!!(CarSignalParser().decodeToVehicleStatus(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_SPAT -> { callback_spat!!(CarSignalParser().decodeToSPaT(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_HV_POS -> { callback_hvpos!!(CarSignalParser().decodeToHVPos(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_HV_MOTION -> { callback_hvmotion!!(CarSignalParser().decodeToHVMotion(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_RV1_STATUS -> { callback_rv1!!(CarSignalParser().decodeToRSUStatus(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_RV2_STATUS -> { callback_rv2!!(CarSignalParser().decodeToRSUStatus(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_RV3_STATUS -> { callback_rv3!!(CarSignalParser().decodeToRSUStatus(p0.value as ByteArray)) }
+                            ID_AREA_RX_V2X_RV4_STATUS -> { callback_rv4!!(CarSignalParser().decodeToRSUStatus(p0.value as ByteArray)) }
+                            ID_AREA_RX_TRACKING_OBJ1 -> { callback_tracking_obj1!!(CarSignalParser().decodeToTrackingObject(p0.value as ByteArray)) }
+                            ID_AREA_RX_TRACKING_OBJ2 -> { callback_tracking_obj2!!(CarSignalParser().decodeToTrackingObject(p0.value as ByteArray)) }
+                            ID_AREA_RX_TRACKING_OBJ3 -> { callback_tracking_obj3!!(CarSignalParser().decodeToTrackingObject(p0.value as ByteArray)) }
+                            //ID_AREA_RX_V2X_EXT02 -> { callback_ex2!!(CarSignalParser().decodeTo(p0.value as ByteArray)) }
                             else -> {}
                         }
                     } catch (e:Exception) {
@@ -93,7 +96,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_WARNING)
-            var warning = CarSignalParser().parseAsWarnInform(value!!.value as ByteArray)
+            var warning = CarSignalParser().decodeToWarnInform(value!!.value as ByteArray)
             Log.d(TAG, "getWarning="+warning.toString())
             emit(warning)
         } catch (e:Exception) {
@@ -106,7 +109,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_INFORM)
-            var inform = CarSignalParser().parseAsWarnInform(value!!.value as ByteArray)
+            var inform = CarSignalParser().decodeToWarnInform(value!!.value as ByteArray)
             Log.d(TAG, "getInform="+inform.toString())
             emit(inform)
         } catch (e:Exception) {
@@ -119,7 +122,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_VEHICLE_STATUS)
-            var status = CarSignalParser().parseAsVehicleStatus(value!!.value as ByteArray)
+            var status = CarSignalParser().decodeToVehicleStatus(value!!.value as ByteArray)
             Log.d(TAG, "getVehicleStatus="+status.toString())
             emit(status)
         } catch (e:Exception) {
@@ -132,7 +135,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_SPAT)
-            var spat = CarSignalParser().parseAsSPaT(value!!.value as ByteArray)
+            var spat = CarSignalParser().decodeToSPaT(value!!.value as ByteArray)
             Log.d(TAG, "getSPaT="+spat.toString())
             emit(spat)
         } catch (e:Exception) {
@@ -145,7 +148,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_HV_POS)
-            var hvpos = CarSignalParser().parseAsHVPos(value!!.value as ByteArray)
+            var hvpos = CarSignalParser().decodeToHVPos(value!!.value as ByteArray)
             Log.d(TAG, "getHVPos="+hvpos.toString())
             emit(hvpos)
         } catch (e:Exception) {
@@ -158,7 +161,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_HV_MOTION)
-            var hvmotion = CarSignalParser().parseAsHVMotion(value!!.value as ByteArray)
+            var hvmotion = CarSignalParser().decodeToHVMotion(value!!.value as ByteArray)
             Log.d(TAG, "getHVMotion="+hvmotion.toString())
             emit(hvmotion)
         } catch (e:Exception) {
@@ -171,7 +174,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_RV1_STATUS)
-            var rv = CarSignalParser().parseAsRSUStatus(value!!.value as ByteArray)
+            var rv = CarSignalParser().decodeToRSUStatus(value!!.value as ByteArray)
             Log.d(TAG, "getRV1Status="+rv.toString())
             emit(rv)
         } catch (e:Exception) {
@@ -184,7 +187,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_RV2_STATUS)
-            var rv = CarSignalParser().parseAsRSUStatus(value!!.value as ByteArray)
+            var rv = CarSignalParser().decodeToRSUStatus(value!!.value as ByteArray)
             Log.d(TAG, "getRV2Status="+rv.toString())
             emit(rv)
         } catch (e:Exception) {
@@ -197,7 +200,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_RV3_STATUS)
-            var rv = CarSignalParser().parseAsRSUStatus(value!!.value as ByteArray)
+            var rv = CarSignalParser().decodeToRSUStatus(value!!.value as ByteArray)
             Log.d(TAG, "getRV3Status="+rv.toString())
             emit(rv)
         } catch (e:Exception) {
@@ -210,7 +213,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_RV4_STATUS)
-            var rv = CarSignalParser().parseAsRSUStatus(value!!.value as ByteArray)
+            var rv = CarSignalParser().decodeToRSUStatus(value!!.value as ByteArray)
             Log.d(TAG, "getRV4Status="+rv.toString())
             emit(rv)
         } catch (e:Exception) {
@@ -223,7 +226,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_TRACKING_OBJ1)
-            var track = CarSignalParser().parseAsTrackingObject(value!!.value as ByteArray)
+            var track = CarSignalParser().decodeToTrackingObject(value!!.value as ByteArray)
             Log.d(TAG, "getTrackingObj1="+track.toString())
             emit(track)
         } catch (e:Exception) {
@@ -236,7 +239,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_TRACKING_OBJ2)
-            var track = CarSignalParser().parseAsTrackingObject(value!!.value as ByteArray)
+            var track = CarSignalParser().decodeToTrackingObject(value!!.value as ByteArray)
             Log.d(TAG, "getTrackingObj2="+track.toString())
             emit(track)
         } catch (e:Exception) {
@@ -249,7 +252,7 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_TRACKING_OBJ3)
-            var track = CarSignalParser().parseAsTrackingObject(value!!.value as ByteArray)
+            var track = CarSignalParser().decodeToTrackingObject(value!!.value as ByteArray)
             Log.d(TAG, "getTrackingObj3="+track.toString())
             emit(track)
         } catch (e:Exception) {
@@ -262,11 +265,26 @@ class CarApi(car: CarEx) {
         try {
             var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
             var value = manager.getProperty<ByteArray>(ID_PROPERTY_V2X, ID_AREA_RX_V2X_EXT02)
-            var track = CarSignalParser().parseAsExt(value!!.value as ByteArray)
+            var track = CarSignalParser().decodeToExt(value!!.value as ByteArray)
             Log.d(TAG, "getExt="+track.toString())
             emit(track)
         } catch (e:Exception) {
             Log.e(TAG, e.toString())
+        }
+    }
+
+    fun setExt(ext: Flow<Ext>) : Unit {
+        GlobalScope.launch(Dispatchers.IO) {
+            ext.collect {
+                while (!_car.isConnected) {}
+                try {
+                    var manager = _car.getCarManager(android.car.Car.PROPERTY_SERVICE) as CarPropertyManager
+                    manager.setProperty<ByteArray>(ByteArray::class.java,ID_PROPERTY_V2X,
+                        ID_AREA_TX_V2X_EXT01, CarSignalParser().encodeFromExt(it) )
+                } catch (e:Exception) {
+                    Log.e(TAG, e.toString())
+                }
+            }
         }
     }
 

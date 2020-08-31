@@ -6,7 +6,7 @@ import android.util.Log
 class CarSignalParser constructor() {
     private val TAG = this.javaClass.name
 
-    fun parseAsWarnInform(data: ByteArray) : WarnInform {
+    fun decodeToWarnInform(data: ByteArray) : WarnInform {
         var type = data[0].toUByte().toInt()
         var direction = data[1].toUByte().toInt()
         var severity = data[2].toUByte().toInt()
@@ -19,7 +19,7 @@ class CarSignalParser constructor() {
             .also { Log.d(TAG, it.toString()) }
     }
 
-    fun parseAsSPaT(data: ByteArray) : SPaT {
+    fun decodeToSPaT(data: ByteArray) : SPaT {
         var sl_phase = data[0].toUByte().toInt()
         var sl_end = data[1].toUByte().toInt()
         var lt_phase = data[2].toUByte().toInt()
@@ -32,7 +32,7 @@ class CarSignalParser constructor() {
             .also { Log.d(TAG, it.toString()) }
     }
 
-    fun parseAsVehicleStatus(data: ByteArray) : VehicleStatus {
+    fun decodeToVehicleStatus(data: ByteArray) : VehicleStatus {
         var status = data[0].toUByte().toInt()
         var speed = data[1].toUByte().toInt()
         var gear = data[2].toUByte().toInt()
@@ -44,13 +44,13 @@ class CarSignalParser constructor() {
             .also { Log.d(TAG, it.toString()) }
     }
 
-    fun parseAsHVPos(data: ByteArray) : HVPos {
+    fun decodeToHVPos(data: ByteArray) : HVPos {
         var lat = ByteStream().bytesToFloat(byteArrayOf(data[0], data[1], data[2], data[3]))
         var lon = ByteStream().bytesToFloat(byteArrayOf(data[4], data[5], data[6], data[7]))
         return HVPos(lat, lon).also { Log.d(TAG, it.toString()) }
     }
 
-    fun parseAsHVMotion(data: ByteArray) : HVMotion {
+    fun decodeToHVMotion(data: ByteArray) : HVMotion {
         var alt =  ByteStream().bytesToFloat(byteArrayOf(data[0], data[1]))
         var speed = ByteStream().bytesToFloat(byteArrayOf(data[2], data[3]))
         var vehicle_heading = ByteStream().bytesToFloat(byteArrayOf(data[4], data[5]))
@@ -59,7 +59,7 @@ class CarSignalParser constructor() {
             .also { Log.d(TAG, it.toString()) }
     }
 
-    fun parseAsRSUStatus(data: ByteArray) : RSUStatus {
+    fun decodeToRSUStatus(data: ByteArray) : RSUStatus {
         var lon = ByteStream().bytesToFloat(byteArrayOf(data[0], data[1], data[2]))
         var lat = ByteStream().bytesToFloat(byteArrayOf(data[3], data[4], data[5]))
         var text = data[6].toUByte().toInt()
@@ -67,7 +67,7 @@ class CarSignalParser constructor() {
         return RSUStatus(lon, lat, text, icon).also { Log.d(TAG, it.toString()) }
     }
 
-    fun parseAsTrackingObject(data: ByteArray) : TrackingObj {
+    fun decodeToTrackingObject(data: ByteArray) : TrackingObj {
         var to1_type = ByteStream().byteToUInt(data[0], 0, 2).toInt()
         var to1_status = ByteStream().byteToUInt(data[0], 2, 2).toInt()
         var to1_lat = ByteStream().byteToInt(data[0], 4, 4)
@@ -103,7 +103,7 @@ class CarSignalParser constructor() {
             to4_type, to4_status, to4_lat, to4_lon).also { Log.d(TAG, it.toString()) }
     }
 
-    fun parseAsExt(data: ByteArray) : Ext {
+    fun decodeToExt(data: ByteArray) : Ext {
         var sig1 = data[0].toUInt().toInt()
         var sig2 = data[1].toUInt().toInt()
         var sig3 = data[2].toUInt().toInt()
@@ -113,5 +113,10 @@ class CarSignalParser constructor() {
         var sig7 = data[6].toUInt().toInt()
         var sig8 = data[7].toUInt().toInt()
         return Ext(sig1, sig2, sig3, sig4, sig5, sig6, sig7, sig8).also { Log.d(TAG, it.toString()) }
+    }
+
+    fun encodeFromExt(ext: Ext) : ByteArray {
+        return byteArrayOf(ext.sig1.toByte(), ext.sig2.toByte(), ext.sig3.toByte(), ext.sig4.toByte(),
+            ext.sig5.toByte(), ext.sig6.toByte(), ext.sig7.toByte(), ext.sig8.toByte())
     }
 }

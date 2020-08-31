@@ -7,6 +7,40 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.humaxdigital.automotive.v2xpoc.R
 
+@BindingAdapter("id_warning_icon")
+fun idWarningIcon(view: ImageView, res:Int) {
+    Glide.with(view.context).load(res).into(view)
+}
+
+@BindingAdapter("id_warning_lta_icon")
+fun idWarningLtaIcon(view: ImageView, res:Int) {
+    var param = view.layoutParams as ViewGroup.MarginLayoutParams
+    when(res) {
+        R.drawable.v2x_img_icw_car_l ->  {
+            param.width = 278
+            param.height = 124
+            param.leftMargin = 82
+            param.topMargin = 172
+        }
+        R.drawable.v2x_img_icw_car_r ->  {
+            param.width = 278
+            param.height = 124
+            param.leftMargin = 82
+            param.topMargin = 826
+        }
+        R.drawable.v2x_img_icw_car_f ->  {
+            param.width = 161
+            param.height = 113
+            param.leftMargin = 562
+            param.topMargin = 117
+        }
+    }
+    view.requestLayout()
+    Glide.with(view.context).load(res).into(view)
+}
+
+
+
 @BindingAdapter("id_severity_icon")
 fun idSeverityIcon(view: ImageView, res:Int) {
     var param = view.layoutParams as ViewGroup.MarginLayoutParams
@@ -58,11 +92,6 @@ fun idICWDirectionIcon(view: ImageView, res:Int) {
     Glide.with(view.context).load(res).into(view)
 }
 
-@BindingAdapter("id_warning_icon")
-fun idWarningIcon(view: ImageView, res:Int) {
-    Glide.with(view.context).load(res).into(view)
-}
-
 @BindingAdapter("id_range")
 fun idRange(view: ImageView, res:Int) {
     Glide.with(view.context).load(res).into(view)
@@ -80,8 +109,8 @@ fun idLightRight(view: ImageView, res:Int) {
 fun idLightHazard(view: ImageView, res:Int) {
     Glide.with(view.context).load(res).into(view)
 }
-@BindingAdapter("id_light_brake")
-fun idLightBrake(view: ImageView, res:Int) {
+@BindingAdapter("id_car_light_brake")
+fun idCarLightBrake(view: ImageView, res:Int) {
     Glide.with(view.context).load(res).into(view)
 }
 

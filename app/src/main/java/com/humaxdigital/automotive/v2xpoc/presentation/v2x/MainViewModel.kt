@@ -33,7 +33,6 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     private val _track_obj2 = MutableLiveData<String>()
     private val _track_obj3 = MutableLiveData<String>()
     private val _wow = MutableLiveData<String>()
-
     val warning : LiveData<String>
         get() = _warning
     val inform : LiveData<String>
@@ -77,16 +76,16 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     private val _id_light_left = MutableLiveData<Int>()
     private val _id_light_right = MutableLiveData<Int>()
     private val _id_light_hazard = MutableLiveData<Int>()
-    private val _id_light_brake = MutableLiveData<Int>()
+    private val _id_car_light_brake = MutableLiveData<Int>()
     private val _warning_type = MutableLiveData<V2XTYPE>()
     private val _warning_pused = MutableLiveData<V2XPUSHED>()
     private val _warning_distance = MutableLiveData<String>()
     private val _warning_text = MutableLiveData<String>()
     private val _id_warning_icon = MutableLiveData<Int>()
-    private val _warning_audio = MutableLiveData<String>()
+    private val _warning_audio = MutableLiveData<Int>()
+    private val _warning_voice = MutableLiveData<String>()
     private val _id_warning_direction = MutableLiveData<Int>()
     private val _id_warning_severity = MutableLiveData<Int>()
-
 
     val warning_type : LiveData<V2XTYPE>
         get() = _warning_type
@@ -96,8 +95,10 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         get() = _warning_text
     val id_warning_icon : LiveData<Int>
         get() = _id_warning_icon
-    val warning_audio : LiveData<String>
+    val warning_audio : LiveData<Int>
         get() = _warning_audio
+    val warning_voice : LiveData<String>
+        get() = _warning_voice
     val warning_distance : LiveData<String>
         get() = _warning_distance
     val id_range : LiveData<Int>
@@ -126,8 +127,8 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         get() = _id_light_right
     val id_light_hazard : LiveData<Int>
         get() = _id_light_hazard
-    val id_light_brake : LiveData<Int>
-        get() = _id_light_brake
+    val id_car_light_brake : LiveData<Int>
+        get() = _id_car_light_brake
     val id_warning_direction : LiveData<Int>
         get() = _id_warning_direction
     val id_warning_severity : LiveData<Int>
@@ -180,37 +181,38 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
     private fun updateSPaT(data: V2XSPaT) {
         _spat.postValue(data.toString())
     }
+
     private fun updateInform(data: V2XWarnInform) {
         _inform.postValue(data.toString())
-
-        _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
         _warning_pused.postValue(ResourceMapper().mapToWarningPushed(data.pushed))
         _id_range.postValue(ResourceMapper().mapToRange(data.range, data.type))
         _warning_distance.postValue(ResourceMapper().mapToDistance(data.range))
-        _warning_text.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.text_id, data.type)))
-        _warning_audio.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.audio_id, data.type)))
-        _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id, data.type))
+        _warning_text.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.text_id)))
+        _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id))
         _id_warning_direction.postValue(ResourceMapper().mapToWarningDirection(data.direction, data.type))
         _id_warning_severity.postValue(ResourceMapper().mapToWarningSeverity(data.severity, data.type, data.direction))
+        _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
+        updateAudio(data.audio_id)
     }
+
     private fun updateWarning(data: V2XWarnInform) {
         _warning.postValue(data.toString())
-        _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
         _warning_pused.postValue(ResourceMapper().mapToWarningPushed(data.pushed))
         _id_range.postValue(ResourceMapper().mapToRange(data.range, data.type))
         _warning_distance.postValue(ResourceMapper().mapToDistance(data.range))
-        _warning_text.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.text_id, data.type)))
-        _warning_audio.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.audio_id, data.type)))
-        _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id, data.type))
+        _warning_text.postValue(context.resources.getString(ResourceMapper().mapToWarningText(data.text_id)))
+        _id_warning_icon.postValue(ResourceMapper().mapToWarningIcon(data.icon_id))
         _id_warning_direction.postValue(ResourceMapper().mapToWarningDirection(data.direction, data.type))
         _id_warning_severity.postValue(ResourceMapper().mapToWarningSeverity(data.severity, data.type, data.direction))
+        _warning_type.postValue(ResourceMapper().mapToWarningType(data.type))
+        updateAudio(data.audio_id)
     }
     private fun updateVehicleStatus(data: V2XVehicleStatus) {
         _vehicle.postValue(data.toString())
         _id_light_hazard.postValue(ResourceMapper().mapToLightHazard(data.light))
         _id_light_left.postValue(ResourceMapper().mapToLightLeft(data.light))
         _id_light_right.postValue(ResourceMapper().mapToLightRight(data.light))
-        _id_light_brake.postValue(ResourceMapper().mapToLightBrake(data.light))
+        _id_car_light_brake.postValue(ResourceMapper().mapToLightBrake(data.light))
         _id_gear_d.postValue(ResourceMapper().mapToGearD(data.gear))
         _id_gear_p.postValue(ResourceMapper().mapToGearP(data.gear))
         _id_gear_r.postValue(ResourceMapper().mapToGearR(data.gear))
@@ -220,6 +222,16 @@ class MainViewModel(private val context: Context, private val getCarUseCase: Get
         _id_v2x_status_v.postValue(ResourceMapper().mapToV2XV2V(data.v2xstatus))
         _id_v2x_status_i.postValue(ResourceMapper().mapToV2XV2I(data.v2xstatus))
         _vehicle_speed.postValue(data.speed)
+    }
+
+    private fun updateAudio(id: Int) {
+        var audio_id = ResourceMapper().mapToWarningAudio(id)
+        if ( audio_id == 0 ) {
+            var voice_id = ResourceMapper().mapToWarningVoice(id)
+            if ( voice_id != 0 ) _warning_voice.postValue(context.resources.getString(voice_id))
+        } else {
+            _warning_audio.postValue(audio_id)
+        }
     }
 
     private fun updateHVMotion(data: V2XHVMotion) { _hv_motion.postValue(data.toString()) }

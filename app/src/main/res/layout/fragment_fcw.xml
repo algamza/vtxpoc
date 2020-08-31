@@ -23,17 +23,24 @@
             android:textColor="#ffffff" />
 
         <ImageView
+            android:layout_width="161px"
+            android:layout_height="106px"
+            android:layout_marginTop="141px"
+            android:layout_marginLeft="562px"
+            app:id_warning_icon="@{vm.id_warning_icon}" />
+
+        <ImageView
             android:layout_width="267px"
             android:layout_height="151px"
-            android:layout_marginTop="248px"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="267px"
+            android:layout_marginLeft="506px"
             app:id_range="@{vm.id_range}" />
 
         <TextView
             android:layout_width="162px"
             android:layout_height="52px"
-            android:layout_marginLeft="561px"
-            android:layout_marginTop="227px"
+            android:layout_marginLeft="562px"
+            android:layout_marginTop="316px"
             android:gravity="center_horizontal|center_vertical"
             android:text="@{vm.warning_distance}"
             android:textSize="42px"
@@ -44,18 +51,18 @@
             android:shadowDy="2.0" />
         
         <ImageView
-            android:layout_width="161px"
-            android:layout_height="106px"
-            android:layout_marginLeft="52px"
-            android:layout_marginTop="141px"
-            android:src="@drawable/v2x_img_car_warning"/>
+            android:layout_width="98px"
+            android:layout_height="88px"
+            android:layout_marginLeft="590px"
+            android:layout_marginTop="190px"
+            android:src="@drawable/v2x_ic_smash"/>
 
         <ImageView
             android:layout_width="504px"
             android:layout_height="329px"
             android:layout_marginTop="301px"
-            android:layout_gravity="center_horizontal"
-            app:id_light_brake="@{vm.id_light_brake}" />
+            android:layout_marginLeft="381px"
+            app:id_car_light_brake="@{vm.id_car_light_brake}" />
     </FrameLayout>
 </layout>
 

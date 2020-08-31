@@ -34,6 +34,10 @@ class CarSignalMapper constructor() {
         return V2XWow(getWowCmd(ext.sig1), getEmoticon(ext.sig2), getDirection(ext.sig3), ext.sig4, ext.sig5)
     }
 
+    fun mapToExt(wow: V2XWow) : Ext {
+        return Ext(getExtSig1(wow.cmd), getExtSig2(wow.emotion), getExtSig3(wow.direction), wow.range, wow.counter, 0, 0, 0 )
+    }
+
     private fun getEmoticon(emo: Int) : EMOTICON {
         var _cmd = EMOTICON(false, false, false,
             false, false, false, false, false)
@@ -47,6 +51,18 @@ class CarSignalMapper constructor() {
         if ( emo and _mask.shl(6) != 0 ) _cmd.leader = true
         if ( emo and _mask.shl(7) != 0 ) _cmd.follower = true
         return _cmd
+    }
+
+    private fun getExtSig3(direction: DIRECTION) : Int {
+        return 0
+    }
+
+    private fun getExtSig2(emotion: EMOTICON) : Int {
+        return 0
+    }
+
+    private fun getExtSig1(cmd: WOWCMD) : Int {
+        return 0
     }
 
     private fun getWowCmd(cmd: Int) : WOWCMD {

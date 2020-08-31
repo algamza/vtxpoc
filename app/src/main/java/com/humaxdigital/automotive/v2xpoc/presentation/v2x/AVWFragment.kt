@@ -2,6 +2,7 @@ package com.humaxdigital.automotive.v2xpoc.presentation.v2x
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,28 +10,27 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.humaxdigital.automotive.v2xpoc.R
-import com.humaxdigital.automotive.v2xpoc.databinding.FragmentIcwBinding
+import com.humaxdigital.automotive.v2xpoc.databinding.FragmentAvwBinding
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XPUSHED
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class ICWFragment : Fragment() {
+class AVWFragment : Fragment() {
     private val TAG = this.javaClass.name
     private val vm: MainViewModel by sharedViewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val bind = (DataBindingUtil.inflate(inflater, R.layout.fragment_icw,
-            container, false) as FragmentIcwBinding)
+        val bind = (DataBindingUtil.inflate(inflater, R.layout.fragment_avw,
+            container, false) as FragmentAvwBinding)
         bind.vm = vm
         bind.setLifecycleOwner(activity)
-        vm.warning_audio.observe(this, Observer {
+        vm.warning_type.observe(this, Observer {
+            Log.d(TAG, "")
+        })
+        vm.warning_voice.observe(this, Observer {
             when(vm.warning_pused.value) {
                 V2XPUSHED.ADD -> {
                     vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)

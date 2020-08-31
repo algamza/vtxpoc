@@ -18,6 +18,7 @@ interface CarRepository {
     fun getTrackingObj2() : Flow<V2XTrackingObj>
     fun getTrackingObj3() : Flow<V2XTrackingObj>
     fun getWow() : Flow<V2XWow>
+    fun setWow(wow: Flow<V2XWow>)
 
     fun callbackWarning() : Flow<V2XWarnInform>
     fun callbackInform() : Flow<V2XWarnInform>

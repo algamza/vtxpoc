@@ -17,10 +17,6 @@ class FCWFragment : Fragment() {
     private val TAG = this.javaClass.name
     private val vm: MainViewModel by sharedViewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +26,7 @@ class FCWFragment : Fragment() {
             container, false) as FragmentFcwBinding)
         bind.vm = vm
         bind.setLifecycleOwner(activity)
-        vm.warning_audio.observe(this, Observer {
+        vm.warning_voice.observe(this, Observer {
             when(vm.warning_pused.value) {
                 V2XPUSHED.ADD -> {
                     vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)

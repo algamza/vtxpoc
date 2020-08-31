@@ -62,6 +62,10 @@ class GetCarUseCase(private val repositories: CarRepository) {
         return repositories.getWow()
     }
 
+    fun setWow(wow: Flow<V2XWow>) {
+        return repositories.setWow(wow)
+    }
+
     fun callbackWarning(): Flow<V2XWarnInform> {
         return repositories.callbackWarning()
     }

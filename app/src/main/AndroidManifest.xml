@@ -23,6 +23,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.humaxdigital.automotive.ACTION_V2X" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

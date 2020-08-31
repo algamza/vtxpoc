@@ -4,14 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XPUSHED
 import com.humaxdigital.automotive.v2xpoc.presentation.entities.V2XTYPE
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_log.*
-import org.koin.android.ext.android.get
 import org.koin.androidx.fragment.android.setupKoinFragmentFactory
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.Exception
@@ -76,18 +74,37 @@ class MainActivity : AppCompatActivity() {
 
     private fun mapToFragment(type: V2XTYPE) = when(type) {
         V2XTYPE.EBW -> EBWFragment::class.java
-        V2XTYPE.EVW -> EVWFragment::class.java
-        V2XTYPE.ICW -> ICWFragment::class.java
+        V2XTYPE.EVW -> {
+            when(vm.id_warning_icon.value) {
+                110, 113 -> EVWCFragment::class.java
+                111, 114 -> EVWLFragment::class.java
+                112, 115 -> EVWRFragment::class.java
+                else -> EVWCFragment::class.java
+            }
+        }
+        V2XTYPE.ICW -> {
+            when(vm.id_warning_icon.value) {
+                20, 21, 22 -> ICWLFragment::class.java
+                23, 24, 25 -> ICWRFragment::class.java
+                else -> ICWLFragment::class.java
+            }
+        }
         V2XTYPE.LTA -> LTAFragemnt::class.java
         V2XTYPE.FCW -> FCWFragment::class.java
         V2XTYPE.BSW_LCW -> BSWFragment::class.java
+        V2XTYPE.AVW -> AVWFragment::class.java
+        V2XTYPE.HLW -> {
+            when(vm.id_warning_icon.value) {
+                80 -> RWWAFragment::class.java
+                81, 82 -> RWWLRFragment::class.java
+                else -> RWWAFragment::class.java
+            }
+        }
         /*
         V2XTYPE.NONE -> {}
         V2XTYPE.HB -> {}
         V2XTYPE.DNPW -> {}
-        V2XTYPE.AVW -> {}
         V2XTYPE.CLW -> {}
-        V2XTYPE.HLW -> {}
         V2XTYPE.SLW -> {}
         V2XTYPE.RLVW -> {}
         V2XTYPE.VRUCW  -> {}

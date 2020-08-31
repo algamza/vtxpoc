@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/v2x_bg_basic">
+
+        <ImageView
+            android:layout_width="161px"
+            android:layout_height="106px"
+            android:layout_marginLeft="562px"
+            android:layout_marginTop="142px"
+            android:src="@drawable/v2x_img_car_warning"/>
+
+        <ImageView
+            android:layout_width="1280px"
+            android:layout_height="158px"
+            android:src="@drawable/v2x_bg_textwarning_dim"/>
+
+        <TextView
+            android:layout_width="656px"
+            android:layout_height="97px"
+            android:layout_marginLeft="316px"
+            android:layout_marginTop="25px"
+            android:gravity="center_horizontal|top"
+            android:text="@{vm.warning_text}"
+            android:textSize="32px"
+            android:textColor="#ffffff" />
+
+        <ImageView
+            android:layout_width="267px"
+            android:layout_height="151px"
+            android:layout_marginTop="247px"
+            android:layout_marginLeft="506px"
+            app:id_warning_icon="@{vm.id_warning_icon}"/>
+
+        <ImageView
+            android:layout_width="88px"
+            android:layout_height="73px"
+            android:layout_marginTop="195px"
+            android:layout_marginLeft="595px"
+            android:src="@drawable/v2x_ic_warning" />
+
+        <TextView
+            android:layout_width="162px"
+            android:layout_height="52px"
+            android:layout_marginLeft="562px"
+            android:layout_marginTop="316px"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@{vm.warning_distance}"
+            android:textSize="42px"
+            android:textColor="#ffffff"
+            android:shadowColor="#000000"
+            android:shadowRadius="1.0"
+            android:shadowDx="2.0"
+            android:shadowDy="2.0"/>
+
+        <ImageView
+            android:layout_width="504px"
+            android:layout_height="329px"
+            android:layout_marginTop="301px"
+            android:layout_marginLeft="381px"
+            app:id_car_light_brake="@{vm.id_car_light_brake}" />
+    </FrameLayout>
+</layout>

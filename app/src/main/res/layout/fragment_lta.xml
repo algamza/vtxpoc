@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/v2x_bg_icw">
+        android:background="@drawable/v2x_bg_basic">
 
         <TextView
             android:layout_width="656px"
@@ -25,15 +25,15 @@
         <ImageView
             android:layout_width="267px"
             android:layout_height="151px"
-            android:layout_marginTop="248px"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="267px"
+            android:layout_marginLeft="506px"
             app:id_range="@{vm.id_range}" />
 
         <TextView
             android:layout_width="162px"
             android:layout_height="52px"
-            android:layout_marginLeft="561px"
-            android:layout_marginTop="227px"
+            android:layout_marginLeft="562px"
+            android:layout_marginTop="316px"
             android:gravity="center_horizontal|center_vertical"
             android:text="@{vm.warning_distance}"
             android:textSize="42px"
@@ -46,24 +46,23 @@
         <ImageView
             android:layout_width="226px"
             android:layout_height="142px"
-            android:layout_marginTop="147px"
             android:layout_marginLeft="348px"
+            android:layout_marginTop="147px"
             android:src="@drawable/v2x_ic_icw_arrow_l"/>
 
         <ImageView
-            android:layout_width="278px"
-            android:layout_height="124px"
-            android:layout_marginTop="172px"
-            android:layout_marginLeft="189px"
-            app:id_lta_direction_icon="@{vm.id_warning_direction}"/>
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:layout_marginTop="0px"
+            android:layout_marginLeft="0px"
+            app:id_warning_lta_icon="@{vm.id_warning_icon}" />
 
         <ImageView
             android:layout_width="504px"
             android:layout_height="329px"
             android:layout_marginTop="301px"
-            android:layout_gravity="center_horizontal"
-            app:id_light_brake="@{vm.id_light_brake}" />
-
+            android:layout_marginLeft="381px"
+            app:id_car_light_brake="@{vm.id_car_light_brake}" />
     </FrameLayout>
 </layout>
 

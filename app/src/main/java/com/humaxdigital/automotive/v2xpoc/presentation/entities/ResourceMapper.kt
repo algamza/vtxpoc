@@ -2,7 +2,6 @@ package com.humaxdigital.automotive.v2xpoc.presentation.entities
 
 import com.humaxdigital.automotive.v2xpoc.R
 import com.humaxdigital.automotive.v2xpoc.domain.entities.*
-import com.humaxdigital.automotive.v2xpoc.domain.entities.PUSHED
 
 class ResourceMapper constructor() {
     fun mapToLightHazard(light: LIGHT) = when(light.hazard) {
@@ -54,110 +53,98 @@ class ResourceMapper constructor() {
         true -> R.drawable.v2x_ic_v2i_p
         false -> R.drawable.v2x_ic_v2i_n
     }
-    fun mapToWarningText(index: Int, type: TYPE) = when(type) {
-        TYPE.EBW -> {
-            when(index) {
-                1 -> R.string.warning_ebw_1
-                else -> R.string.empty
-            }
-        }
-        TYPE.EVW -> {
-            when(index) {
-                1 -> R.string.warning_evw_1
-                2 -> R.string.warning_evw_2
-                3 -> R.string.warning_evw_3
-                else -> R.string.empty
-            }
-        }
-        TYPE.ICW -> {
-            when(index) {
-                1 -> R.string.warning_icw_1
-                else -> R.string.empty
-            }
-        }
-        TYPE.LTA -> {
-            when(index) {
-                1 -> R.string.warning_lta_1
-                else -> R.string.empty
-            }
-        }
-        TYPE.FCW -> {
-            when(index) {
-                1 -> R.string.warning_fcw_1
-                else -> R.string.empty
-            }
-        }
-        TYPE.BSW_LCW -> {
-            when(index) {
-                1 -> R.string.warning_bsw_1
-                else -> R.string.empty
-            }
-        }
+    fun mapToWarningText(index: Int) = when(index) {
+        10 -> R.string.FCW_WarnText_Ahead
+        20 -> R.string.ICW_InfromText_Left
+        21 -> R.string.ICW_WarnText_Left
+        22 -> R.string.ICW_WarninText_Left_Corner
+        23 -> R.string.ICW_InfromText_Right
+        24 -> R.string.ICW_WarnText_Right
+        25 -> R.string.ICW_WarnText_Right_Corner
+        30 -> R.string.LTA_WarnText_Left
+        31 -> R.string.LTA_WarnText_Right
+        32 -> R.string.LTA_WarnText_Across
+        40 -> R.string.BSW_InfromText_Left
+        41 -> R.string.BSW_WarnText_Left
+        42 -> R.string.BSW_InfromText_Right
+        43 -> R.string.BSW_WarnText_Right
+        60 -> R.string.EBW_WarnText
+        70 -> R.string.AVW_WarnText_ESPLgt
+        71 -> R.string.AVW_WarnText_ABSLgt
+        72 -> R.string.AVW_WarnText_EmergencyLgt
+        80 -> R.string.HLW_RWW_WarnText
+        100 -> R.string.RLVW_InformText_ToRed
+        101 -> R.string.RLVW_WarnText_ToRed
+        102 -> R.string.RLVW_WarnText_Red
+        103 -> R.string.RLVW_InformText_ToGreen
+        110 -> R.string.EVW_WarnText_Behind
+        111 -> R.string.EVW_WarnText_BehindLeft
+        112 -> R.string.EVW_WarnText_BEhindRight
+        113 -> R.string.EVW_WarnText_SlowDown
+        114 -> R.string.EVW_WarnText_FarBehind
+        120 -> R.string.VRUCW_WarnText_Left
+        121 -> R.string.VRUCW_WarnText_Right
         else -> R.string.empty
     }
-    fun mapToWarningAudio(index: Int, type: TYPE) = when(type) {
-        TYPE.EBW -> {
-            when(index) {
-                1 -> R.string.warning_ebw_1
-                else -> R.string.empty
-            }
-        }
-        TYPE.EVW -> {
-            when(index) {
-                1 -> R.string.warning_evw_1
-                2 -> R.string.warning_evw_2
-                3 -> R.string.warning_evw_3
-                else -> R.string.empty
-            }
-        }
-        TYPE.ICW -> {
-            when(index) {
-                1 -> R.string.warning_icw_1
-                else -> R.string.empty
-            }
-        }
-        TYPE.LTA -> {
-            when(index) {
-                1 -> R.string.warning_lta_1
-                else -> R.string.empty
-            }
-        }
-        TYPE.FCW -> {
-            when(index) {
-                1 -> R.string.warning_fcw_1
-                else -> R.string.empty
-            }
-        }
-        TYPE.BSW_LCW -> {
-            when(index) {
-                1 -> R.string.warning_bsw_1
-                else -> R.string.empty
-            }
-        }
+    fun mapToWarningAudio(index: Int) = when(index) {
+        10 -> R.raw.fcw_beep
+        20 -> R.raw.icw_beep
+        30 -> R.raw.lta_beep
+        40 -> R.raw.bsw_beep
+        60 -> R.raw.ebw_beep
+        70 -> R.raw.avw_beep
+        80 -> R.raw.hlw_rww_beep
+        100 -> R.raw.rlvw_beep
+        110 -> R.raw.evw_beep
+        120 -> R.raw.vrucw_beep
+        else -> 0
+    }
+    fun mapToWarningVoice(index: Int) = when(index) {
+        81 -> R.string.HLW_RWW_WarnText
+        101 -> R.string.RLVW_WarnText_Red
+        102 -> R.string.RLVW_InformText_ToGreen
+        111 -> R.string.EVW_WarnText_FarBehind
         else -> R.string.empty
     }
-    fun mapToWarningIcon(index: Int, type: TYPE) = when(type) {
-        TYPE.EBW -> {
-            when(index) {
-                1 -> R.drawable.v2x_ic_warning
-                else -> 0
-            }
-        }
-        TYPE.EVW -> {
-            when(index) {
-                1 -> R.drawable.v2x_img_pop_center
-                2 -> R.drawable.v2x_img_pop_right
-                3 -> R.drawable.v2x_img_pop_left
-                else -> 0
-            }
-        }
-        TYPE.BSW_LCW -> {
-            when(index) {
-                1 -> R.drawable.v2x_img_pop_bsw_l
-                2 -> R.drawable.v2x_img_pop_bsw_r
-                else -> 0
-            }
-        }
+
+    fun mapToWarningIcon(index: Int) = when(index) {
+        11 -> R.drawable.v2x_img_car_warning_black
+        10 -> R.drawable.v2x_img_car_warning_red
+        20 -> R.drawable.v2x_ic_icw_warning_l_01
+        21 -> R.drawable.v2x_ic_icw_warning_l_02
+        22 -> R.drawable.v2x_ic_icw_warning_l_03
+        23 -> R.drawable.v2x_ic_icw_warning_r_01
+        24 -> R.drawable.v2x_ic_icw_warning_r_02
+        25 -> R.drawable.v2x_ic_icw_warning_r_03
+        30 -> R.drawable.v2x_img_icw_car_l
+        31 -> R.drawable.v2x_img_icw_car_r
+        32 -> R.drawable.v2x_img_icw_car_f
+        40, 41 -> R.drawable.v2x_img_pop_bsw_l
+        42, 43 -> R.drawable.v2x_img_pop_bsw_r
+        63, 64, 65 -> R.drawable.v2x_img_level_warning_n
+        60, 61, 62 -> R.drawable.v2x_img_level_warning_s
+        70, 71 -> R.drawable.v2x_img_level_warning_n
+        80 -> R.drawable.v2x_ic_corporation
+        81 -> R.drawable.v2x_img_rww_left
+        82 -> R.drawable.v2x_img_rww_right
+        100 -> 0
+        101 -> 0
+        102 -> 0
+        103 -> 0
+        110 -> R.drawable.v2x_img_pop_center_01
+        111 -> R.drawable.v2x_img_pop_left_01
+        112 -> R.drawable.v2x_img_pop_right_01
+        113 -> R.drawable.v2x_img_pop_center_02
+        114 -> R.drawable.v2x_img_pop_left_02
+        115 -> R.drawable.v2x_img_pop_right_02
+        120 -> 0
+        121 -> 0
+        201 -> 0
+        202 -> 0
+        204 -> 0
+        208 -> 0
+        216 -> 0
+        220 -> 0
         else -> 0
     }
     fun mapToRange(range: Int, type: TYPE) = when(type) {

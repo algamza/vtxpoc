@@ -20,10 +20,6 @@ class EBWFragment : Fragment() {
     private val TAG = this.javaClass.name
     private val vm: MainViewModel by sharedViewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,16 +29,13 @@ class EBWFragment : Fragment() {
             container, false) as FragmentEbwBinding)
         bind.vm = vm
         bind.setLifecycleOwner(activity)
-        vm.warning_audio.observe(this, Observer {
+        vm.warning_type.observe(this, Observer {
+            Log.d(TAG, "")
+        })
+        vm.warning_voice.observe(this, Observer {
             when(vm.warning_pused.value) {
                 V2XPUSHED.ADD -> {
-                    Log.d(TAG, it)
-                    if ( it.equals("beep") ) {
-                        //ToneGenerator(AudioManager.STREAM_MUSIC, 100).startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT, 500)
-                        var audio = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-                        audio.playSoundEffect(AudioManager.FX_KEY_CLICK)
-                    }
-                    else vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)
+                    vm.tts.speak(it, TextToSpeech.QUEUE_ADD, null, null)
                 }
                 else -> {}
             }

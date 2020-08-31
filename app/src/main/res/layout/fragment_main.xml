@@ -24,7 +24,7 @@
             android:layout_height="329px"
             android:layout_marginTop="301px"
             android:layout_gravity="center_horizontal"
-            app:id_light_brake="@{vm.id_light_brake}" />
+            app:id_car_light_brake="@{vm.id_car_light_brake}" />
     </FrameLayout>
 </layout>
 

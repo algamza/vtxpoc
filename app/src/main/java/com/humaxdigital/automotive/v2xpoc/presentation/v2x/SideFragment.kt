@@ -15,10 +15,6 @@ class SideFragment : Fragment() {
     private val TAG = this.javaClass.name
     private val vm: MainViewModel by sharedViewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

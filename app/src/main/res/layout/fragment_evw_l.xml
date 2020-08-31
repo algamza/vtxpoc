@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.humaxdigital.automotive.v2xpoc.presentation.v2x.MainViewModel" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/v2x_bg_basic">
+
+        <ImageView
+            android:layout_width="1280px"
+            android:layout_height="630px"
+            android:src="@drawable/v2x_bg_evw_dim"/>
+
+        <TextView
+            android:layout_width="656px"
+            android:layout_height="97px"
+            android:layout_marginLeft="316px"
+            android:layout_marginTop="25px"
+            android:gravity="center_horizontal|top"
+            android:text="@{vm.warning_text}"
+            android:textSize="32px"
+            android:textColor="#ffffff" />
+
+        <ImageView
+            android:layout_width="622px"
+            android:layout_height="452px"
+            android:layout_marginLeft="329px"
+            android:layout_marginTop="142px"
+            app:id_warning_icon="@{vm.id_warning_icon}"/>
+
+        <TextView
+            android:layout_width="154px"
+            android:layout_height="50px"
+            android:layout_marginLeft="399px"
+            android:layout_marginTop="276px"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@{vm.warning_distance}"
+            android:textSize="46px"
+            android:textColor="#ffffff" />
+
+    </FrameLayout>
+</layout>
+
